@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz — Mulher Virtuosa</title>
+<!-- A foto da Ana Beatriz está embutida no código (etapa 6).
+     Para trocar pela foto definitiva, procure por: class="retrato" e substitua o src -->
+
+<script>
+  // Imagens que o quiz baixa em segundo plano enquanto ela responde
+  const PRE_CARREGAR = ["imagens/idade-1.webp", "imagens/idade-2.webp", "imagens/idade-3.webp", "imagens/idade-4.webp", "imagens/carrossel-2.webp", "imagens/carrossel-3.webp", "imagens/ana-beatriz.webp", "imagens/looks/vestido-1.webp", "imagens/looks/vestido-2.webp", "imagens/looks/vestido-3.webp", "imagens/looks/vestido-bloqueado.webp", "imagens/looks/calca-1.webp", "imagens/looks/calca-2.webp", "imagens/looks/calca-3.webp", "imagens/looks/calca-bloqueado.webp", "imagens/looks/saia-1.webp", "imagens/looks/saia-2.webp", "imagens/looks/saia-3.webp", "imagens/looks/saia-bloqueado.webp"];
+
+  // TROQUE pelo link do seu checkout
+  const URL_CHECKOUT = "https://pay.hotmart.com/P107350264E?off=ski4rs2i&checkoutMode=10";
+
+  // MODO TESTE: deixa o botão voltar visível para você navegar enquanto monta.
+  // ANTES DE PUBLICAR, troque para false.
+  const MODO_TESTE = false;
+</script>
+
+<!-- PIXEL DO FACEBOOK — cole seu código aqui -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --branco:#FFFFFF;
+  --fundo:#FFFFFF;
+  --tinta:#141414;
+  --cinza:#4B4750;
+  --carmim:#D81E40;
+  --carmim-escuro:#B01532;
+  --rosa-linha:#F6DDE4;
+  --rosa-fundo:#FDF7F9;
+  --verde:#1FA85A;
+  --verde-escuro:#17904C;
+  --raio:14px;
+  /* variáveis herdadas da página de vendas */
+--linho:#FFFFFF;            /* fundo geral */
+  --linho-2:#FDF7F9;          /* rosa clarinho dos blocos */
+  --branco:#FFFFFF;
+  --tinta:#141414;
+  --tinta-suave:#4B4750;
+  --purpura:#D81E40;          /* carmim da marca */
+  --purpura-escura:#A81734;   /* carmim escuro */
+  --rose:#E893A8;
+  --ouro:#D81E40;
+  --borda:#F0E2E7;
+  --verde:#1FA85A;            /* botões */
+  --verde-escuro:#17904C;
+  --sombra:0 2px 14px rgba(20,20,20,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--fundo);color:var(--tinta);
+  font-family:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;-webkit-tap-highlight-color:transparent;
+  text-size-adjust:100%;-webkit-text-size-adjust:100%;
+}
+img{max-width:100%;display:block}
+
+/* ---------- TOPO ---------- */
+.topo{position:sticky;top:0;z-index:20;background:var(--branco);padding:16px 20px 0}
+.marca{
+  font-family:"Playfair Display",Georgia,serif;font-size:22px;
+  text-align:center;color:var(--tinta);font-weight:500;letter-spacing:.01em;
+}
+.marca span{color:var(--carmim)}
+.trilho{height:5px;background:#F2ECEE;border-radius:99px;margin:14px 0;overflow:hidden}
+.fio{height:100%;width:0;background:linear-gradient(90deg,#F07A97,var(--carmim));border-radius:99px;transition:width .45s ease}
+
+/* ---------- ESTRUTURA ---------- */
+.palco{max-width:620px;margin:0 auto;padding:22px 18px calc(56px + env(safe-area-inset-bottom))}
+.etapa{display:none;animation:entra .35s ease both}
+.etapa.ativa{display:block}
+@keyframes entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---------- TIPOGRAFIA ---------- */
+.headline{
+  font-size:clamp(24px,6.2vw,33px);line-height:1.22;font-weight:800;
+  text-align:center;color:var(--tinta);letter-spacing:-.02em;margin-bottom:24px;
+  text-wrap:balance;
+}
+.headline span{color:var(--carmim)}
+.pergunta{
+  font-size:clamp(20px,5.4vw,28px);line-height:1.28;font-weight:800;
+  text-align:center;color:var(--tinta);letter-spacing:-.02em;margin-bottom:8px;
+  text-wrap:balance;
+}
+/* quebra manual que só vale no celular */
+br.mob{display:none}
+@media (max-width:560px){br.mob{display:inline}}
+.apoio{text-align:center;color:var(--cinza);font-size:16px;margin-bottom:22px}
+
+/* ---------- ABERTURA (etapa 1) ---------- */
+.abertura{text-align:center}
+.abertura .sub{font-size:17px;color:var(--cinza);margin-bottom:22px}
+.imagem-abertura{
+  aspect-ratio:1/1;width:92%;max-width:340px;margin:0 auto 22px;background:var(--rosa-fundo);
+  border-radius:16px;display:flex;align-items:center;justify-content:center;
+  color:#C9A7B3;font-size:11px;text-align:center;padding:14px;
+}
+img.imagem-abertura{object-fit:cover;padding:0}
+
+/* ---------- CARROSSEL DA ABERTURA ---------- */
+.carrossel{width:92%;max-width:340px;margin:0 auto 22px}
+.trilha{
+  display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0;
+  border-radius:16px;background:var(--rosa-fundo);
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.trilha::-webkit-scrollbar{display:none}
+.trilha img{
+  flex:0 0 100%;width:100%;aspect-ratio:1/1;object-fit:cover;scroll-snap-align:center;display:block;
+}
+.pontos{display:flex;justify-content:center;gap:7px;margin-top:12px}
+.pontos span{
+  width:7px;height:7px;border-radius:50%;background:var(--rosa-linha);transition:.25s;cursor:pointer;
+}
+.pontos span.ativo{background:var(--carmim);width:20px;border-radius:99px}
+.chamada{font-size:17px;color:var(--tinta);font-weight:600;margin-bottom:18px;text-wrap:balance}
+.chamada strong{color:var(--carmim)}
+.online{
+  display:flex;align-items:flex-start;justify-content:center;gap:8px;
+  margin-top:22px;font-size:14px;color:var(--cinza);line-height:1.45;text-align:center;
+}
+.online i{margin-top:7px}
+.online i{
+  flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:#2BB673;
+  animation:pisca 2s ease-in-out infinite;
+}
+.online b{color:var(--tinta);font-weight:700}
+@keyframes pisca{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ---------- OPÇÕES ---------- */
+.opcoes{display:flex;flex-direction:column;gap:11px;margin-top:14px}
+.opcao{
+  touch-action:manipulation;-webkit-user-select:none;user-select:none;min-height:62px;
+  display:flex;align-items:center;gap:13px;width:100%;text-align:left;
+  background:var(--branco);border:1.5px solid var(--rosa-linha);border-radius:var(--raio);
+  padding:16px 16px;font:inherit;font-size:17px;color:var(--tinta);cursor:pointer;
+  box-shadow:0 2px 10px rgba(20,20,20,.05);transition:border-color .18s,background .18s,transform .12s;
+}
+.opcao:active{transform:scale(.99)}
+.opcao.marcada{border-color:var(--carmim);background:var(--rosa-fundo)}
+.caixa{
+  flex:0 0 24px;height:24px;border-radius:7px;
+  border:1.5px solid var(--rosa-linha);position:relative;background:var(--branco);
+}
+.opcao.marcada .caixa{border-color:var(--carmim);background:var(--carmim)}
+.opcao.marcada .caixa::after{
+  content:"";position:absolute;inset:0;margin:auto;width:6px;height:12px;
+  border:solid var(--branco);border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-2px);
+}
+.emoji{
+  flex:0 0 auto;font-size:27px;line-height:1;
+  font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+}
+
+/* cards de idade */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.card{
+  touch-action:manipulation;-webkit-user-select:none;user-select:none;
+  background:var(--branco);border:1.5px solid var(--rosa-linha);border-radius:var(--raio);
+  overflow:hidden;cursor:pointer;font:inherit;color:var(--tinta);padding:0;
+  box-shadow:0 2px 10px rgba(20,20,20,.05);transition:border-color .18s,transform .12s;
+}
+.card:active{transform:scale(.99)}
+.card .foto{
+  aspect-ratio:1/1;background:var(--rosa-fundo);
+  display:flex;align-items:center;justify-content:center;
+  color:#C9A7B3;font-size:11px;letter-spacing:.1em;text-align:center;padding:8px;
+}
+img.foto{object-fit:cover;padding:0}
+.card .idade{padding:13px 8px;font-weight:700;text-align:center;font-size:17px;color:var(--tinta)}
+
+/* ---------- BOTÃO VERDE COM PULSO ---------- */
+.botao{
+  touch-action:manipulation;position:relative;overflow:hidden;line-height:1.25;
+  display:block;width:100%;background:var(--verde);color:var(--branco);
+  border:none;border-radius:16px;padding:19px 16px;font:inherit;font-weight:800;
+  font-size:clamp(16px,4.4vw,20px);cursor:pointer;letter-spacing:-.01em;
+  animation:halo 2.4s ease-in-out infinite;transition:background .2s,transform .1s;
+}
+.botao:active{transform:translateY(3px)}
+.botao span{position:relative;z-index:2}
+.botao::after{
+  content:"";position:absolute;top:0;left:-65%;width:45%;height:100%;z-index:1;
+  background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.42),rgba(255,255,255,0));
+  transform:skewX(-18deg);animation:brilho 3s ease-in-out infinite;
+}
+@keyframes halo{
+  0%,100%{box-shadow:0 5px 0 var(--verde-escuro),0 0 0 0 rgba(31,168,90,.42)}
+  55%{box-shadow:0 5px 0 var(--verde-escuro),0 0 0 14px rgba(31,168,90,0)}
+}
+@keyframes brilho{0%{left:-65%}60%,100%{left:125%}}
+@media (hover:hover){
+  .opcao:hover,.card:hover,.chip:hover{border-color:var(--carmim)}
+  .botao:hover{background:var(--verde-escuro)}
+}
+:focus-visible{outline:3px solid var(--carmim);outline-offset:3px}
+
+/* ---------- ETAPA 6 — ESPECIALISTA ---------- */
+.autoridade{text-align:center}
+.retrato{
+  aspect-ratio:1/1;width:92%;max-width:340px;margin:0 auto 18px;background:var(--rosa-fundo);
+  border-radius:16px;display:flex;align-items:center;justify-content:center;
+  color:#C9A7B3;font-size:11px;text-align:center;padding:14px;
+}
+img.retrato{object-fit:cover;object-position:50% 20%;padding:0}
+.nome{
+  font-family:"Playfair Display",Georgia,serif;font-weight:500;
+  font-size:clamp(33px,8.2vw,44px);line-height:1.05;letter-spacing:-.01em;margin-bottom:14px;
+}
+.nome span{color:var(--carmim)}
+.credencial{font-size:17px;color:var(--cinza);margin-bottom:4px}
+.credencial strong{color:var(--carmim);font-weight:700}
+.divisor{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--carmim);font-size:15px}
+.divisor::before,.divisor::after{content:"";flex:1;height:1px;background:var(--rosa-linha)}
+.autoridade p{font-size:17px;color:var(--cinza);margin-bottom:16px;text-align:center}
+.autoridade p strong{color:var(--carmim);font-weight:700}
+.autoridade .revistas{font-style:italic;text-align:center;font-size:16px}
+.citacao{
+  background:var(--rosa-fundo);border-radius:12px;
+  padding:16px 18px;margin:18px 0;text-align:center;font-size:17px;color:var(--tinta);font-weight:600;
+}
+.autoridade .botao{margin-top:26px}
+.barra-teste{
+  display:none;position:fixed;left:0;right:0;bottom:0;z-index:50;gap:8px;
+  background:rgba(255,255,255,.96);border-top:1px solid var(--rosa-linha);
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom));justify-content:center;
+}
+body.teste .barra-teste{display:flex}
+body.teste{padding-bottom:70px}
+body.abertura-ativa .topo{display:none}
+body.abertura-ativa .palco{padding:16px 12px calc(22px + env(safe-area-inset-bottom))}
+body.abertura-ativa .headline{font-size:clamp(26px,7.4vw,36px);line-height:1.14;margin-bottom:22px}
+/* o quadrado do carrossel nunca passa de 44% da altura da tela */
+body.abertura-ativa .carrossel{width:min(96%,400px,44vh);margin-bottom:22px}
+body.abertura-ativa .chamada{font-size:17.5px;margin-bottom:22px;padding:0 2px;line-height:1.5;text-wrap:pretty;max-width:none}
+body.abertura-ativa .online{margin-top:18px}
+body.abertura-ativa .botao{max-width:440px;margin:0 auto}
+.barra-teste button{
+  background:var(--branco);border:1px solid var(--rosa-linha);border-radius:99px;
+  padding:10px 16px;color:var(--cinza);font:inherit;font-size:14px;cursor:pointer;
+}
+.barra-teste button:active{background:var(--rosa-fundo)}
+
+/* ---------- ETAPA 9 — CARREGAMENTO ---------- */
+.carregando{text-align:center;padding:44px 0}
+.anel{
+  width:104px;height:104px;margin:0 auto 26px;border-radius:50%;
+  background:conic-gradient(var(--carmim) var(--pct,0%),#F2ECEE 0);
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.anel::before{content:"";position:absolute;inset:10px;background:var(--branco);border-radius:50%}
+.anel b{position:relative;font-size:23px;font-weight:800;color:var(--carmim)}
+.status{color:var(--cinza);font-size:16px;min-height:52px;margin-top:10px}
+
+/* ---------- ETAPA 10 — DEMO ---------- */
+.tela{background:var(--branco);border:1.5px solid var(--rosa-linha);border-radius:18px;padding:20px 16px;box-shadow:0 2px 12px rgba(20,20,20,.05)}
+.passo{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--carmim);font-weight:700;margin-bottom:4px}
+.tela strong{font-size:18px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}
+.chip{
+  touch-action:manipulation;min-height:46px;
+  background:var(--branco);border:1.5px solid var(--rosa-linha);border-radius:99px;
+  padding:10px 16px;font:inherit;font-size:15px;color:var(--tinta);cursor:pointer;transition:.18s;
+}
+.chip.marcada{background:var(--carmim);border-color:var(--carmim);color:var(--branco)}
+.diagnostico{
+  font-size:18px;color:var(--cinza);text-align:center;line-height:1.55;
+  margin:22px 0 20px;
+}
+.diagnostico b{color:var(--carmim);font-weight:700}
+.grade-looks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:18px 0}
+.look{position:relative;border-radius:12px;overflow:hidden;background:var(--rosa-fundo);aspect-ratio:4/5}
+.look img{width:100%;height:100%;object-fit:cover;display:block}
+.look.vazio{display:flex;align-items:center;justify-content:center;color:#C9A7B3;font-size:11px;text-align:center;padding:8px}
+.look.bloqueado{cursor:pointer}
+.mais{text-align:center;margin:30px 0 18px;position:relative}
+.mais::before{
+  content:"";display:block;height:1px;background:var(--rosa-linha);
+  margin:0 auto 18px;max-width:280px;
+}
+.tag-mais{
+  display:inline-block;background:var(--carmim);color:#fff;
+  font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;
+  padding:8px 18px;border-radius:99px;margin-bottom:12px;
+}
+.mais p{font-size:19px;font-weight:600;color:var(--tinta);line-height:1.4;margin:0;text-wrap:balance}
+.mais strong{color:var(--carmim);font-weight:800}
+.oculto{display:none}
+
+@media (max-width:400px){
+  body{font-size:17px}
+  .cards{gap:9px}
+  .opcao{padding:14px;gap:11px;font-size:16px}
+  .emoji{font-size:24px}
+  .palco{padding-left:15px;padding-right:15px}
+  .chip{font-size:14px;padding:10px 14px}
+}
+/* ============ PÁGINA DE VENDAS (última tela) ============ */
+#pv{margin:0 -18px}
+
+/* alinhamento: quase tudo centralizado... */
+#pv h1, #pv h2, #pv h3, #pv .env > p{text-align:center}
+/* ...menos o conteúdo das caixinhas e das listas */
+#pv .lista li, #pv .lista .titulo, #pv .lista p,
+#pv .coluna, #pv .coluna li, #pv .itens li,
+#pv .faq summary, #pv .faq p{text-align:left}
+
+/* prévia de dentro do guia */
+#pv .dentro{margin:26px auto 0;max-width:520px}
+#pv .cena-guia{
+  aspect-ratio:16/10;background:var(--linho-2);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;color:#C9A7B3;font-size:11px;text-align:center;padding:12px;
+}
+#pv img.cena-guia{object-fit:cover;width:100%;margin:0}
+#pv .legenda-guia{font-size:15px;color:var(--tinta-suave);margin-top:10px}
+
+/* contraste "o mundo quer você assim" */
+#pv .contraste{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:26px auto 8px;max-width:520px}
+#pv .contraste figure{margin:0;border-radius:14px;overflow:hidden;background:var(--linho-2);position:relative}
+#pv .contraste img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;margin:0;border-radius:0}
+#pv .contraste .rotulo{
+  position:absolute;bottom:0;left:0;right:0;z-index:2;padding:11px 8px;
+  font-size:13px;font-weight:800;text-align:center;line-height:1.25;letter-spacing:-.01em;
+}
+#pv .contraste .mundo{background:rgba(20,20,20,.82);color:#fff}
+#pv .contraste .voce{background:rgba(216,30,64,.92);color:#fff}
+#pv .contraste figure:first-child img{filter:grayscale(.35) brightness(.92)}
+
+/* esteiras de looks (passam sozinhas em sentidos opostos) */
+#pv .esteira{margin:26px -16px 10px;display:flex;flex-direction:column;gap:11px;overflow:hidden}
+#pv .faixa-looks{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+#pv .corre{display:flex;gap:11px;width:max-content;will-change:transform}
+#pv .corre img{width:200px;aspect-ratio:4/5;object-fit:cover;border-radius:12px;display:block;margin:0;flex:0 0 auto}
+#pv .esq .corre{animation:desliza-esq 34s linear infinite}
+#pv .dir .corre{animation:desliza-dir 34s linear infinite}
+@keyframes desliza-esq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes desliza-dir{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@media (prefers-reduced-motion:reduce){
+  #pv .corre{animation:none!important}
+  #pv .faixa-looks{overflow-x:auto}
+}
+
+/* grade de looks dentro da página de vendas */
+#pv .grade-looks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:22px auto;max-width:460px;width:100%}
+#pv .look{position:relative;border-radius:12px;overflow:hidden;background:var(--linho-2);aspect-ratio:4/5}
+#pv .look img{width:100%;height:100%;object-fit:cover;display:block;margin:0;border-radius:0}
+
+#pv img.moldura{object-fit:cover;width:100%;padding:0}
+#pv img.foto-larga{aspect-ratio:16/10;border-radius:16px}
+
+/* imagens em tamanho natural */
+#pv .img-natural{width:100%;height:auto;aspect-ratio:780/799;display:block;border-radius:14px;margin:26px auto 22px;max-width:520px}
+#pv .depo{display:flex;flex-direction:column;gap:16px;margin-top:22px}
+#pv .depo img{width:100%;height:auto;display:block;border-radius:14px;margin:0}
+#pv .depo img:first-child{aspect-ratio:860/483}
+#pv .depo img:last-child{aspect-ratio:640/1089}
+
+/* carrossel de depoimentos */
+#pv .dep-carrossel{margin-top:22px}
+#pv .dep-trilha{
+  display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-radius:16px;
+  scrollbar-width:none;-ms-overflow-style:none;background:var(--linho-2);
+}
+#pv .dep-trilha::-webkit-scrollbar{display:none}
+#pv .dep-slide,#pv .dep-trilha img{
+  flex:0 0 100%;width:100%;aspect-ratio:4/5;object-fit:cover;scroll-snap-align:center;
+  display:flex;align-items:center;justify-content:center;color:#C9A7B3;font-size:12px;letter-spacing:.06em;
+}
+#pv .dep-pontos{display:flex;justify-content:center;gap:7px;margin-top:12px}
+#pv .dep-pontos span{width:7px;height:7px;border-radius:50%;background:var(--borda);transition:.25s;cursor:pointer}
+#pv .dep-pontos span.ativo{background:var(--purpura);width:20px;border-radius:99px}
+
+/* bônus */
+#pv .bonus-lista{display:flex;flex-direction:column;gap:16px;margin-top:22px}
+#pv .bonus{
+  background:var(--branco);border:1px solid var(--borda);border-radius:16px;
+  overflow:hidden;box-shadow:var(--sombra);
+}
+#pv .bonus-arte{
+  aspect-ratio:3/4;background:var(--linho-2);display:flex;align-items:center;justify-content:center;
+  color:#C9A7B3;font-size:12px;text-align:center;letter-spacing:.06em;
+}
+#pv img.bonus-arte{object-fit:cover;width:100%}
+#pv .bonus-txt{padding:18px 18px 22px;text-align:left}
+#pv .bonus-tag{
+  display:inline-block;background:var(--linho-2);color:var(--purpura);
+  font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 12px;border-radius:99px;
+}
+#pv .preco{display:inline-block;margin-left:8px;font-size:15px}
+#pv .preco s{color:var(--tinta-suave);opacity:.75}
+#pv .preco b{color:var(--verde);font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.06em}
+#pv .bonus-txt h3{margin-top:10px}
+#pv .itens .valor s{color:var(--tinta-suave);opacity:.75}
+#pv .itens .valor b{color:var(--verde);font-weight:800;font-size:14px}
+#pv .bonus-txt h3{text-align:left;font-family:"Figtree",sans-serif;font-weight:800;font-size:20px;margin-bottom:8px;letter-spacing:-.01em}
+#pv .bonus-txt p{text-align:left;font-size:17px;color:var(--tinta-suave);margin:0}
+
+/* divisor com coração, abaixo dos títulos */
+#pv .coracao{display:flex;align-items:center;justify-content:center;gap:12px;color:var(--purpura);font-size:15px;margin:0 auto 22px;max-width:340px}
+#pv .coracao::before,#pv .coracao::after{content:"";flex:1;height:1px;background:var(--borda)}
+
+/* escassez */
+#pv .escassez{
+  scroll-margin-top:18px;
+  margin:30px auto 0;max-width:520px;
+  background:linear-gradient(180deg,#FFF9EC,#FDF2DC);
+  border:1.5px solid #E3B857;border-radius:18px;padding:24px 20px;text-align:center;
+}
+#pv .escassez h3{
+  font-family:"Figtree",sans-serif;font-weight:800;font-size:20px;color:#8A6314;
+  text-transform:uppercase;letter-spacing:.04em;margin-bottom:12px;
+}
+#pv .escassez p{font-size:17px;color:var(--tinta);margin-bottom:18px}
+#pv .escassez p s.caro{color:var(--purpura);font-weight:800;opacity:1}
+#pv .escassez p b.barato{color:var(--verde);font-weight:800}
+#pv .escassez strong{color:#8A6314}
+#pv .expira{
+  display:block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  color:#8A6314;font-weight:700;margin-bottom:8px;
+}
+#pv .relogio{
+  font-family:"Figtree",sans-serif;font-variant-numeric:tabular-nums;
+  font-size:46px;font-weight:800;color:var(--purpura);letter-spacing:-.02em;line-height:1;
+}
+#pv .relogio.acabou{color:var(--tinta-suave)}
+
+/* efeito de entrada ao rolar */
+#pv .surge{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.3,1)}
+#pv .surge.visivel{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  #pv .surge{opacity:1;transform:none}
+}
+body.pv-ativa .topo{display:none}
+body.pv-ativa .palco{padding:0;max-width:none}
+body.teste #pv .barra-fixa{bottom:62px}
+#pv{box-sizing:border-box;margin:0;padding:0}
+#pv{
+  background:var(--linho);color:var(--tinta);
+  font-family:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:19px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  padding-bottom:88px;
+}
+#pv img{max-width:100%;display:block}
+#pv .faixa{padding:52px 0}
+#pv .faixa.clara{background:var(--linho-2)}
+#pv .faixa.escura{background:var(--purpura-escura);color:#FFF0F3}
+#pv .env{max-width:680px;margin:0 auto;padding:0 16px}
+#pv h1, #pv h2, #pv h3{font-family:"Playfair Display",Georgia,serif;font-weight:600;line-height:1.2;letter-spacing:-.01em}
+#pv h1{font-size:clamp(31px,8vw,44px);line-height:1.15;margin-bottom:8px;color:var(--tinta);text-align:center;font-family:"Figtree",sans-serif;font-weight:800;letter-spacing:-.025em;text-wrap:balance}
+#pv h2{font-size:clamp(27px,7.2vw,36px);line-height:1.18;color:var(--tinta);margin-bottom:20px;font-family:"Figtree",sans-serif;font-weight:800;letter-spacing:-.025em;text-wrap:balance}
+#pv .faixa.escura h2, #pv .faixa.escura h3{color:#FFF}
+#pv h3{font-size:21px;margin-bottom:8px}
+#pv p{margin-bottom:16px}
+#pv h1 span,#pv h2 span{color:var(--purpura)}
+#pv p:last-child{margin-bottom:0}
+#pv strong{font-weight:700;color:var(--purpura)}
+#pv .faixa.escura strong{color:#FFD9E0}
+#pv .faixa.escura h2 span{color:#FFD9E0}
+/* dentro das colunas o fundo é claro: texto volta a ser escuro */
+#pv .faixa.escura .coluna,#pv .coluna{color:var(--tinta)}
+#pv .faixa.escura .coluna li,#pv .coluna li{color:var(--tinta)}
+#pv .faixa.escura .coluna h3,#pv .coluna h3{
+  font-family:"Figtree",sans-serif;font-weight:800;font-size:19px;
+  text-align:center;color:var(--tinta);margin-bottom:14px;letter-spacing:-.01em;
+}
+#pv .coluna .cena{
+  aspect-ratio:4/3;background:var(--linho-2);border-radius:12px;margin-bottom:14px;
+  display:flex;align-items:center;justify-content:center;color:#C9A7B3;font-size:11px;text-align:center;padding:10px;
+}
+#pv img.cena{object-fit:cover;width:100%;padding:0;margin:0 0 14px}
+#pv .eyebrow{
+  display:block;text-align:center;font-size:11px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--ouro);font-weight:600;margin-bottom:14px;
+}
+#pv .marca{
+  font-family:"Playfair Display",Georgia,serif;font-size:22px;
+  text-align:center;color:var(--tinta);font-weight:500;
+  padding:16px 0;border-bottom:1px solid var(--borda);background:var(--branco);
+}
+#pv .marca span{color:var(--purpura)}
+#pv .centro{text-align:center}
+#pv .destaque{
+  font-family:"Playfair Display",Georgia,serif;font-size:clamp(21px,4.6vw,26px);
+  line-height:1.35;color:var(--purpura-escura);text-align:center;
+}
+#pv /* imagens */
+.moldura{
+  background:var(--linho-2);border-radius:16px;display:flex;align-items:center;justify-content:center;
+  color:#B0A099;font-size:12px;letter-spacing:.08em;text-align:center;padding:20px;
+}
+#pv .mockup{aspect-ratio:1/1;max-width:420px;margin:26px auto}
+#pv .foto-larga{aspect-ratio:16/10;margin:24px 0}
+#pv /* CTA */
+.cta{
+  position:relative;overflow:hidden;
+  display:block;width:100%;max-width:520px;margin:26px auto 10px;
+  background:var(--verde);color:#FFF;text-align:center;text-decoration:none;
+  border-radius:99px;padding:20px 24px;font-weight:800;font-size:18px;line-height:1.3;
+  animation:halo 2.4s ease-in-out infinite;transition:background .2s,transform .12s;
+}
+#pv .cta::after{
+  content:"";position:absolute;top:0;left:-65%;width:45%;height:100%;
+  background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.42),rgba(255,255,255,0));
+  transform:skewX(-18deg);animation:brilho 3s ease-in-out infinite;
+}
+#pv @keyframes halo{
+  0%,100%{box-shadow:0 6px 18px rgba(31,168,90,.26),0 0 0 0 rgba(31,168,90,.45)}
+#pv 55%{box-shadow:0 6px 18px rgba(31,168,90,.26),0 0 0 15px rgba(31,168,90,0)}
+#pv }
+@keyframes brilho{0%{left:-65%}
+#pv 60%, #pv 100%{left:125%}
+#pv }
+.cta:hover{background:var(--verde-escuro)}
+#pv .cta:active{transform:scale(.99)}
+#pv .faixa.escura .cta{background:var(--verde);color:#FFF}
+#pv .cta-nota{text-align:center;font-size:14px;color:var(--tinta-suave)}
+#pv .barra-fixa{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--branco);
+  border-top:1px solid var(--borda);padding:12px 18px calc(12px + env(safe-area-inset-bottom));
+  box-shadow:0 -4px 18px rgba(46,37,48,.09);
+}
+#pv .barra-fixa .cta{margin:0 auto;padding:16px;font-size:17px}
+#pv /* listas */
+.lista{list-style:none;margin-top:8px}
+#pv .lista li{
+  background:var(--branco);border:1px solid var(--borda);border-radius:14px;
+  padding:20px;margin-bottom:12px;box-shadow:var(--sombra);
+}
+#pv .lista .titulo{
+  display:flex;gap:10px;align-items:flex-start;font-weight:800;color:var(--tinta);
+  font-family:"Figtree",sans-serif;font-size:19px;margin-bottom:6px;line-height:1.3;letter-spacing:-.01em;
+}
+#pv .ok{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;color:var(--verde);vertical-align:-3px}
+#pv .ok svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+#pv .lista .titulo .ok svg{width:21px;height:21px;margin-top:2px}
+#pv .coluna li .ok svg{width:17px;height:17px}
+#pv .lista p{font-size:17px;color:var(--tinta-suave);margin:0}
+#pv /* demo do app */
+.tela{background:var(--branco);border:1px solid var(--borda);border-radius:20px;padding:22px 18px;box-shadow:var(--sombra);margin-top:24px}
+#pv .passo{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ouro);font-weight:600;margin-bottom:4px}
+#pv .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px}
+#pv .chip{background:var(--linho);border:1.5px solid var(--borda);border-radius:99px;padding:10px 16px;font:inherit;font-size:16px;color:var(--tinta);cursor:pointer;transition:.18s}
+#pv .chip:hover{border-color:var(--rose)}
+#pv .chip.marcada{background:var(--purpura);border-color:var(--purpura);color:#FFF}
+
+
+#pv .oculto{display:none}
+#pv /* depoimentos */
+.depoimentos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+#pv .depoimentos .moldura{aspect-ratio:4/5;font-size:11px}
+#pv .prints{display:grid;gap:12px;margin-top:12px}
+#pv .prints .moldura{aspect-ratio:5/2;font-size:11px}
+#pv /* oferta */
+.caixa-oferta{
+  background:var(--branco);border:2px solid var(--ouro);border-radius:20px;
+  padding:28px 22px;box-shadow:var(--sombra);margin-top:26px;
+}
+#pv .itens{list-style:none;margin-bottom:22px}
+#pv .itens li span:first-child{color:var(--tinta)}
+#pv .itens li{
+  display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  padding:11px 0;border-bottom:1px dashed var(--borda);font-size:16px;line-height:1.35;
+}
+#pv .itens li > span:first-child{flex:1;min-width:0}
+#pv .itens li:last-child{border-bottom:none}
+#pv .itens .valor{color:var(--tinta-suave);white-space:nowrap;flex:0 0 auto;text-align:right;font-size:15px}
+#pv .de{text-align:center;color:var(--tinta-suave);text-decoration:line-through;font-size:17px}
+#pv .por{
+  text-align:center;font-family:"Figtree",sans-serif;font-size:54px;font-weight:800;
+  color:var(--purpura);line-height:1.05;margin:4px 0;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;
+}
+#pv .parcela{text-align:center;font-size:17px;color:var(--tinta-suave)}
+#pv .economia{
+  text-align:center;background:#EFF8F2;color:var(--verde);font-weight:600;
+  border-radius:99px;padding:9px 16px;margin:16px auto 0;max-width:330px;font-size:16px;
+}
+/* selo de garantia (imagem) */
+#pv .selo-garantia{
+  aspect-ratio:1/1;display:block;width:210px;max-width:56%;height:auto;
+  margin:0 auto 20px;border:none;border-radius:0;background:none;
+}
+#pv .tres{gap:14px;flex-wrap:wrap;padding:0 4px}
+#pv .tres span{display:inline-flex;align-items:center;gap:6px}
+#pv .tres{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:20px 0;font-size:16px;color:var(--tinta-suave)}
+#pv /* antes e depois */
+.colunas{display:grid;gap:14px;margin-top:22px}
+#pv .coluna{border-radius:16px;padding:22px;border:1px solid var(--borda);background:var(--branco)}
+#pv .coluna.hoje{background:#F4EFEF}
+#pv .faixa.escura .coluna h3,#pv .coluna h3{font-size:18px;margin-bottom:14px}
+#pv .coluna ul{list-style:none}
+#pv .coluna li{display:flex;gap:10px;align-items:flex-start;margin-bottom:11px;font-size:17px;line-height:1.5}
+#pv .coluna li:last-child{margin-bottom:0}
+#pv .x{color:#A5716E;font-weight:700}
+#pv .v{color:var(--verde);font-weight:800}
+#pv /* faq */
+.faq{margin-top:8px}
+#pv .faq details{background:var(--branco);border:1px solid var(--borda);border-radius:14px;margin-bottom:11px;overflow:hidden}
+#pv .faq summary{
+  cursor:pointer;padding:18px 20px;font-weight:600;color:var(--purpura-escura);
+  font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:14px;
+}
+#pv .faq summary::-webkit-details-marker{display:none}
+#pv .faq summary::after{content:"+";color:var(--ouro);font-size:24px;line-height:1}
+#pv .faq details[open] summary::after{content:"–"}
+#pv .faq p{padding:0 20px 20px;font-size:17px;color:var(--tinta-suave)}
+#pv .rodape{text-align:center;font-size:14px;color:var(--tinta-suave);padding:34px 22px 20px;line-height:1.6}
+#pv{outline:3px solid var(--rose);outline-offset:3px}
+#pv @media (min-width:560px){
+  .colunas{grid-template-columns:1fr 1fr}
+#pv .prints{grid-template-columns:1fr 1fr}
+#pv }
+@media (prefers-reduced-motion:reduce){*{transition:none!important}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="marca">Mulher <span>Virtuosa</span></div>
+  <div class="trilho"><div class="fio" id="fio"></div></div>
+</header>
+
+<main class="palco">
+
+  <!-- ETAPA 1 — ABERTURA (internamente é a etapa 0) -->
+  <section class="etapa ativa" data-etapa="0">
+    <div class="abertura">
+      <h1 class="headline">Tenha Acesso a Mais de <span>150 Looks Cristãos</span> Lindos e Elegantes, Feitos Especialmente Para Você!</h1>
+      <!-- TROQUE por: <img class="imagem-abertura" src="imagens/abertura.jpg" alt="Looks cristãos"> -->
+      <div class="carrossel">
+        <div class="trilha" id="trilha"><img src="imagens/carrossel-1.webp" alt="Looks cristãos elegantes" fetchpriority="high"><img src="imagens/carrossel-2.webp" alt="Looks cristãos elegantes" loading="lazy"><img src="imagens/carrossel-3.webp" alt="Looks cristãos elegantes" loading="lazy"></div>
+        <div class="pontos" id="pontos"></div>
+      </div>
+      <p class="chamada">Veja agora os looks personalizados que vão te deixar uma mulher <strong>linda e feminina sem ser vulgar!</strong></p>
+      <button class="botao" data-avanca><span>Eu quero os meus looks Personalizados!</span></button>
+      <p class="online"><i></i><span><b id="online">152</b> mulheres estão encontrando <br class="mob">seus looks ideais neste momento</span></p>
+    </div>
+  </section>
+
+  <!-- ETAPA 2 — IDADE -->
+  <section class="etapa" data-etapa="1">
+    <h2 class="pergunta">Qual a sua idade?</h2>
+    <p class="apoio">Sua idade nos ajuda a escolher os looks que mais combinam com você.</p>
+    <div class="cards">
+      <button class="card" data-valor="18-29"><img class="foto" src="imagens/idade-1.webp" alt="18 a 29 anos"><div class="idade">18 a 29 anos</div></button>
+      <button class="card" data-valor="30-39"><img class="foto" src="imagens/idade-2.webp" alt="30 a 39 anos"><div class="idade">30 a 39 anos</div></button>
+      <button class="card" data-valor="40-49"><img class="foto" src="imagens/idade-3.webp" alt="40 a 49 anos"><div class="idade">40 a 49 anos</div></button>
+      <button class="card" data-valor="50+"><img class="foto" src="imagens/idade-4.webp" alt="50 anos ou mais"><div class="idade">50 anos ou mais</div></button>
+    </div>
+  </section>
+
+  <!-- ETAPA 2 -->
+  <section class="etapa" data-etapa="2">
+    <h2 class="pergunta">Qual desses desafios você enfrenta <br class="mob">na hora de se vestir?</h2>
+    <div class="opcoes">
+      <button class="opcao" data-valor="cara-de-velha"><span class="caixa"></span><span class="emoji">😔</span>Quando me visto de um jeito mais comportado, fico com cara de mais velha.</button>
+      <button class="opcao" data-valor="nao-combino"><span class="caixa"></span><span class="emoji">😥</span>Não sei como combinar as peças que já tenho.</button>
+      <button class="opcao" data-valor="insegura"><span class="caixa"></span><span class="emoji">😟</span>Fico insegura na hora de escolher o look, com medo do que vão pensar.</button>
+      <button class="opcao" data-valor="repito"><span class="caixa"></span><span class="emoji">😐</span>Repito sempre as mesmas roupas, porque são as que me deixam segura.</button>
+    </div>
+  </section>
+
+  <!-- ETAPA 3 -->
+  <section class="etapa" data-etapa="3">
+    <h2 class="pergunta">Qual sua maior dificuldade <br class="mob">na hora de comprar roupas?</h2>
+    <div class="opcoes">
+      <button class="opcao" data-valor="vulgar"><span class="caixa"></span><span class="emoji">😳</span>Eu não encontro roupas bonitas que não sejam vulgares.</button>
+      <button class="opcao" data-valor="nao-uso"><span class="caixa"></span><span class="emoji">🛍️</span>Eu até compro peças bonitas, mas depois percebo que não vou usar.</button>
+      <button class="opcao" data-valor="nao-combina-comigo"><span class="caixa"></span><span class="emoji">🤔</span>Eu não sei escolher roupas que combinem comigo.</button>
+      <button class="opcao" data-valor="elegante-x-semgraca"><span class="caixa"></span><span class="emoji">😕</span>Eu não sei diferenciar o que é elegante do que é sem graça.</button>
+    </div>
+  </section>
+
+  <!-- ETAPA 4 -->
+  <section class="etapa" data-etapa="4">
+    <h2 class="pergunta">Qual tipo de peça você mais <br class="mob">gosta de usar?</h2>
+    <div class="opcoes">
+      <button class="opcao" data-valor="saia"><span class="caixa"></span><span class="emoji">💃</span>Saia</button>
+      <button class="opcao" data-valor="vestido"><span class="caixa"></span><span class="emoji">👗</span>Vestido</button>
+      <button class="opcao" data-valor="calca"><span class="caixa"></span><span class="emoji">👖</span>Calça</button>
+      <button class="opcao" data-valor="todas"><span class="caixa"></span><span class="emoji">🙌</span>Uso todas</button>
+    </div>
+  </section>
+
+  <!-- ETAPA 5 -->
+  <section class="etapa" data-etapa="5">
+    <h2 class="pergunta">Qual o clima predominante <br class="mob">onde você mora?</h2>
+    <div class="opcoes">
+      <button class="opcao" data-valor="quente"><span class="caixa"></span><span class="emoji">☀️</span>Calor a maior parte do ano.</button>
+      <button class="opcao" data-valor="misto"><span class="caixa"></span><span class="emoji">⛅</span>Às vezes calor, às vezes frio.</button>
+      <button class="opcao" data-valor="frio"><span class="caixa"></span><span class="emoji">❄️</span>Frio a maior parte do ano.</button>
+    </div>
+  </section>
+
+  <!-- ETAPA 6 — ESPECIALISTA -->
+  <section class="etapa" data-etapa="6">
+    <h2 class="pergunta" style="margin-bottom:20px">Quem vai te ajudar <br class="mob">a montar seus looks?</h2>
+    <div class="autoridade">
+      <!-- TROQUE depois por: <img class="retrato" src="imagens/ana-beatriz.jpg" alt="Ana Beatriz Moraes"> -->
+      <img class="retrato" src="imagens/ana-beatriz.webp" alt="Ana Beatriz Moraes">
+      <h3 class="nome">Ana Beatriz <span>Moraes</span></h3>
+      <p class="credencial">Especialista em Consultoria de Imagem e líder do ministério de mulheres da igreja onde congrega <strong>há mais de 15 anos.</strong></p>
+      <div class="divisor">♥</div>
+      <p>Foi ali, ouvindo centenas de mulheres, que ela percebeu que quase todas travavam na mesma pergunta:</p>
+      <p class="citacao">"Como eu me arrumo sem exagerar, sem parecer mais velha do que sou e sem me sentir vulgar?"</p>
+      <p>Foi por isso que, agora em 2026, ela criou o <strong>Mulher Virtuosa</strong>, um guia com mais de 150 looks já montados especialmente para mulheres cristãs que querem se sentir bonitas, elegantes e admiradas, sem culpa, sem exagero e sem deixar de ser quem são.</p>
+      <p>Hoje já são <strong>mais de 3.000 mulheres</strong> que aprenderam a se vestir do jeito certo, seguindo os valores cristãos e recuperando a essência de uma verdadeira mulher virtuosa.</p>
+      <p>Mais do que ensinar moda, Ana Beatriz ensina o que ninguém te contou: <strong>você pode se sentir linda sem se sentir culpada por isso.</strong></p>
+      <button class="botao" data-avanca><span>CONTINUAR</span></button>
+    </div>
+  </section>
+
+  <!-- ETAPA 7 -->
+  <section class="etapa" data-etapa="7">
+    <h2 class="pergunta">Hoje, qual seria o seu maior desejo <br class="mob">na hora de escolher uma roupa?</h2>
+    <div class="opcoes">
+      <button class="opcao" data-valor="praticidade"><span class="caixa"></span><span class="emoji">⏰</span>Abrir o armário e já saber o que vestir, sem perder tempo.</button>
+      <button class="opcao" data-valor="certeza"><span class="caixa"></span><span class="emoji">😌</span>Ter certeza de que estou bem, sem precisar perguntar pra ninguém.</button>
+      <button class="opcao" data-valor="sem-culpa"><span class="caixa"></span><span class="emoji">💖</span>Me sentir bonita sem me sentir errada.</button>
+      <button class="opcao" data-valor="elogio"><span class="caixa"></span><span class="emoji">✨</span>Ser elogiada pelo meu estilo, não pela roupa chamar atenção.</button>
+    </div>
+  </section>
+
+  <!-- ETAPA 8 -->
+  <section class="etapa" data-etapa="8">
+    <h2 class="pergunta">Qual dessas opções <br class="mob">iria te ajudar mais?</h2>
+    <div class="opcoes">
+      <button class="opcao" data-valor="bonita-sem-vulgar"><span class="caixa"></span><span class="emoji">😇</span>Saber qual o tipo de roupa que é bonita sem ser vulgar.</button>
+      <button class="opcao" data-valor="pecas-que-combinam"><span class="caixa"></span><span class="emoji">🧩</span>Ter poucas peças no armário que combinem entre si.</button>
+      <button class="opcao" data-valor="looks-prontos"><span class="caixa"></span><span class="emoji">⏱️</span>Ter looks prontos, sem perder tempo toda manhã escolhendo.</button>
+      <button class="opcao" data-valor="economia"><span class="caixa"></span><span class="emoji">💸</span>Evitar compras desnecessárias e impulsivas de roupas que nunca vou usar.</button>
+    </div>
+  </section>
+
+  <!-- ETAPA 9 — CARREGAMENTO -->
+  <section class="etapa" data-etapa="9">
+    <div class="carregando">
+      <div class="anel" id="anel"><b id="pct">0%</b></div>
+      <h2 class="pergunta">Personalizando os seus Looks</h2>
+      <p class="status" id="status">Separando os looks que combinam com o seu estilo e os seus valores…</p>
+    </div>
+  </section>
+
+  <!-- ETAPA 10 — DIAGNÓSTICO PERSONALIZADO -->
+  <section class="etapa" data-etapa="10">
+    <h2 class="pergunta">Prontinho! Encontramos <br class="mob">os looks perfeitos para você!</h2>
+    <p class="diagnostico" id="diagnostico"></p>
+    <div class="grade-looks" id="grade"></div>
+    <div class="mais">
+      <span class="tag-mais">E tem mais</span>
+      <p>Você também recebe looks com <strong>outras peças</strong> que combinam com o seu perfil:</p>
+    </div>
+    <div class="grade-looks" id="grade-extra">
+      <div class="look"><img src="imagens/looks/extra-1.webp" alt="" loading="lazy"></div>
+      <div class="look"><img src="imagens/looks/extra-2.webp" alt="" loading="lazy"></div>
+      <div class="look"><img src="imagens/looks/extra-3.webp" alt="" loading="lazy"></div>
+      <div class="look"><img src="imagens/looks/extra-4.webp" alt="" loading="lazy"></div>
+    </div>
+    <button class="botao" id="finalizar"><span>Quero ter acesso a todos <br class="mob">os meus looks agora!</span></button>
+  </section>
+
+
+  <!-- ============ PÁGINA DE VENDAS — última tela do quiz ============ -->
+  <section class="etapa" data-etapa="11" id="pv">
+<div class="marca">Mulher <span>Virtuosa</span></div>
+
+<!-- ===================== BLOCO 01 ===================== -->
+<section class="faixa clara">
+  <div class="env">
+    <h1>Aprenda a montar looks cristãos lindos e elegantes <span>sem abrir mão dos seus valores!</span></h1>
+    <img class="img-natural" src="imagens/mockup.webp" alt="Guia Mulher Virtuosa no celular" loading="lazy">
+    <p class="destaque">Com o Guia Mulher Virtuosa, você tem <strong>mais de 150 opções de looks</strong> para se sentir bonita e elegante em qualquer ocasião.</p>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 02 ===================== -->
+<section class="faixa">
+  <div class="env">
+    <h2>Se você já abriu o guarda-roupas, olhou tudo e sentiu que nada ali representa mais quem você é, <span>você não está sozinha!</span></h2>
+    <div class="coracao">♥</div>
+    <p>Com o Guia Mulher Virtuosa, você <strong>sabe exatamente quais looks</strong> te deixam bonita de verdade, dentro dos valores em que você acredita, e sai de casa com a certeza de que vai ser <strong>admirada pelo seu estilo</strong>!</p>
+    <p>Tudo isso <strong>sem perder a manhã inteira</strong> decidindo o que vestir, sem precisar dar um jeitinho na roupa e <strong>sem gastar dinheiro com peças que nunca saem do seu guarda-roupa</strong>!</p>
+    <img class="moldura foto-larga" src="imagens/guarda-roupa.webp" alt="Mulher em dúvida diante do guarda-roupa" loading="lazy">
+    <h2 style="text-align:center">O problema <span>nunca foi você!</span></h2>
+    <div class="coracao">♥</div>
+    <p>A verdade é que as lojas enchem as prateleiras de <strong>roupas curtas, justas e transparentes</strong>, e as redes sociais só mostram <strong>um tipo de mulher que não é você</strong>!</p>
+    <p>Além disso, quando você acha uma roupa que pode usar, ela é <strong>sem graça</strong> e te deixa com <strong>cara de bem mais velha do que você é</strong>!</p>
+    <p>O resultado é que você compra peças bonitas que <strong>nunca consegue usar</strong>, dá um jeitinho no que já tem, e no fim acaba <strong>voltando sempre para as mesmas roupas</strong>, aquelas que você não tem mais orgulho de usar!</p>
+
+    <div class="contraste">
+      <figure>
+        <div class="rotulo mundo">O mundo quer você assim…</div>
+        <img src="imagens/contraste-1.webp" alt="Roupa curta e justa" loading="lazy">
+      </figure>
+      <figure>
+        <div class="rotulo voce">Mas Deus te fez pra ser assim.</div>
+        <img src="imagens/contraste-2.webp" alt="Look elegante e modesto" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 03 ===================== -->
+<section class="faixa clara">
+  <div class="env">
+    <h2>Com o Guia Mulher Virtuosa, você descobre que pode ser uma mulher bonita, elegante e admirada, <span>sem abrir mão de nenhum dos seus valores!</span></h2>
+    <div class="coracao">♥</div>
+    <p>Você vai montar <strong>looks incríveis para qualquer ocasião</strong>, considerando até mesmo a estação e o clima de onde você mora.</p>
+    <p>São mais de <strong>150 looks personalizados especialmente para você</strong>, ou seja, você vai saber exatamente o que comprar e <strong>nunca mais vai deixar peças paradas no guarda-roupas</strong>!</p>
+
+    <div class="esteira">
+      <div class="faixa-looks esq"><div class="corre"><img src="imagens/looks/vestido-1.webp" alt="" loading="lazy"><img src="imagens/looks/saia-1.webp" alt="" loading="lazy"><img src="imagens/looks/calca-1.webp" alt="" loading="lazy"><img src="imagens/looks/extra-2.webp" alt="" loading="lazy"><img src="imagens/looks/extra-1.webp" alt="" loading="lazy"><img src="imagens/looks/extra-3.webp" alt="" loading="lazy"><img src="imagens/looks/vestido-1.webp" alt="" loading="lazy"><img src="imagens/looks/saia-1.webp" alt="" loading="lazy"><img src="imagens/looks/calca-1.webp" alt="" loading="lazy"><img src="imagens/looks/extra-2.webp" alt="" loading="lazy"><img src="imagens/looks/extra-1.webp" alt="" loading="lazy"><img src="imagens/looks/extra-3.webp" alt="" loading="lazy"></div></div>
+      <div class="faixa-looks dir"><div class="corre"><img src="imagens/looks/vestido-2.webp" alt="" loading="lazy"><img src="imagens/looks/saia-2.webp" alt="" loading="lazy"><img src="imagens/looks/calca-2.webp" alt="" loading="lazy"><img src="imagens/looks/vestido-3.webp" alt="" loading="lazy"><img src="imagens/looks/saia-3.webp" alt="" loading="lazy"><img src="imagens/looks/calca-3.webp" alt="" loading="lazy"><img src="imagens/looks/vestido-2.webp" alt="" loading="lazy"><img src="imagens/looks/saia-2.webp" alt="" loading="lazy"><img src="imagens/looks/calca-2.webp" alt="" loading="lazy"><img src="imagens/looks/vestido-3.webp" alt="" loading="lazy"><img src="imagens/looks/saia-3.webp" alt="" loading="lazy"><img src="imagens/looks/calca-3.webp" alt="" loading="lazy"></div></div>
+    </div>
+    <a class="cta ancora" href="#oferta-box">Quero ver os Looks Personalizados Agora!</a>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 04 ===================== -->
+<section class="faixa">
+  <div class="env">
+    <h2 style="text-align:center">Ideal para <span>você que deseja…</span></h2>
+    <div class="coracao">♥</div>
+    <ul class="lista">
+      <li>
+        <div class="titulo"><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Se vestir com beleza e elegância sem abrir mão dos seus valores</div>
+        <p>Ser bonita e ser uma mulher de valores nunca foram coisas opostas. Com o Mulher Virtuosa, você monta looks lindos e elegantes que combinam com tudo aquilo em que você acredita.</p>
+      </li>
+      <li>
+        <div class="titulo"><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Nunca mais se perguntar se aquela roupa é adequada ou não</div>
+        <p>Sabemos como cansa ficar em dúvida toda vez que você se arruma. Com o Mulher Virtuosa, as peças já vêm dentro dos seus valores, e você sai de casa com a certeza de que é uma mulher de respeito.</p>
+      </li>
+      <li>
+        <div class="titulo"><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Parar de se sentir com cara de mais velha do que você é</div>
+        <p>Roupas que respeitam os seus valores não precisam ser sem graça. Com o Mulher Virtuosa, você descobre looks atuais e elegantes, que combinam com a mulher que você é hoje.</p>
+      </li>
+      <li>
+        <div class="titulo"><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Ganhar tempo sem abrir mão de estar bem vestida</div>
+        <p>Chega de perder a manhã inteira na frente do guarda-roupas. Com o Mulher Virtuosa, você tem looks prontos na palma da mão e sabe exatamente o que vestir em poucos minutos.</p>
+      </li>
+      <li>
+        <div class="titulo"><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Parar de gastar dinheiro com roupa que você nunca vai usar</div>
+        <p>Chega de comprar uma peça bonita que fica parada no cabide. Com o Mulher Virtuosa, você aprende a investir só nas peças certas, que combinam entre si e que você vai usar de verdade.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 05 ===================== -->
+<section class="faixa clara">
+  <div class="env">
+    <h2 style="text-align:center">Veja o que <span>nossas clientes estão dizendo</span></h2>
+    <div class="coracao">♥</div>
+    <div class="depo">
+      <img src="imagens/depoimento-1.webp" alt="Clientes usando os looks" loading="lazy">
+      <img src="imagens/depoimento-2.webp" alt="Comentários de clientes" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 06 — ENTREGÁVEIS + BÔNUS + OFERTA ===================== -->
+<section class="faixa" id="oferta">
+  <div class="env">
+    <h2 style="text-align:center">Veja tudo o que você terá acesso <span>dentro do Guia Mulher Virtuosa</span></h2>
+    <div class="coracao">♥</div>
+    <p class="centro">Tudo foi organizado de um jeito <strong>claro e fácil de usar</strong>, pra você achar rápido os looks que combinam com você e com cada ocasião.</p>
+    <p class="centro" style="margin-bottom:22px">Assim que você abre o seu guia, encontra:</p>
+
+    <ul class="lista">
+      <li>
+        <div class="titulo"><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Looks separados para o seu perfil</div>
+        <p>Suas respostas nos mostraram o que combina com você, e é isso que você vai encontrar aqui dentro: <strong>looks do seu jeito, para o seu dia a dia</strong>.</p>
+      </li>
+      <li>
+        <div class="titulo"><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Mais de 150 looks prontos para qualquer ocasião</div>
+        <p>Looks montados e organizados por ocasião e clima, para você copiar rápido e sem complicação. Chega de perder tempo tentando montar uma combinação que nunca fica boa.</p>
+      </li>
+      <li>
+        <div class="titulo"><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Atualizações contínuas</div>
+        <p>Novos looks e peças são adicionados com frequência, pra você sempre ter opções atuais e nunca mais ficar sem ideia do que vestir!</p>
+      </li>
+    </ul>
+
+    <div class="dentro">
+      <div class="cena-guia">IMAGEM — PÁGINAS DO GUIA ABERTAS NO CELULAR (16:10)</div>
+      <p class="legenda-guia">Assim é por dentro: cada look pronto, com as peças separadas e o link de onde comprar.</p>
+    </div>
+
+    <p class="destaque" style="margin:34px 0 8px">E não para por aí. Tem mais!</p>
+    <p class="centro">Você também vai receber bônus exclusivos que vão completar a sua experiência e deixar você 100% pronta pra se vestir bem em qualquer ocasião:</p>
+
+    <div class="bonus-lista">
+      <!-- Cada bônus: arte vertical + título + texto. Troque a div .bonus-arte por <img class="bonus-arte" src="imagens/bonus-1.jpg" alt=""> -->
+      <div class="bonus">
+        <img class="bonus-arte" src="imagens/bonus-1.webp" alt="" loading="lazy">
+        <div class="bonus-txt">
+          <span class="bonus-tag">Bônus 01</span>
+          <span class="preco"><s>R$47</s> <b>Grátis</b></span>
+          <h3>Achadinhos da Shein e da Shopee</h3>
+          <p>Uma lista completa com as melhores <strong>peças cristãs da Shopee e Shein</strong>, com link direto para comprar sem perder tempo procurando.</p>
+        </div>
+      </div>
+      <div class="bonus">
+        <img class="bonus-arte" src="imagens/bonus-2.webp" alt="" loading="lazy">
+        <div class="bonus-txt">
+          <span class="bonus-tag">Bônus 02</span>
+          <span class="preco"><s>R$77</s> <b>Grátis</b></span>
+          <h3>Instagram da Mulher Virtuosa</h3>
+          <p>Aprenda a tirar <strong>fotos lindas sem ser vulgar</strong>, com um guia de melhores ângulos, poses e enquadramentos para você aparecer bem em qualquer foto, mostrando a mulher que você realmente é!</p>
+        </div>
+      </div>
+      <div class="bonus">
+        <img class="bonus-arte" src="imagens/bonus-3.webp" alt="" loading="lazy">
+        <div class="bonus-txt">
+          <span class="bonus-tag">Bônus 03</span>
+          <span class="preco"><s>R$67</s> <b>Grátis</b></span>
+          <h3>Looks de Praia e Piscina</h3>
+          <p>Um guia com looks de <strong>praia, piscina e férias</strong> para você curtir o sol à vontade, se sentindo bonita e confortável dentro dos seus valores.</p>
+        </div>
+      </div>
+      <div class="bonus">
+        <img class="bonus-arte" src="imagens/bonus-4.webp" alt="" loading="lazy">
+        <div class="bonus-txt">
+          <span class="bonus-tag">Bônus 04</span>
+          <span class="preco"><s>R$47</s> <b>Grátis</b></span>
+          <h3>Moda Fitness Cristã</h3>
+          <p>Looks de academia, caminhada e treino que <strong>não marcam e não deixam você constrangida</strong>, para você cuidar do seu corpo sem abrir mão de nada.</p>
+        </div>
+      </div>
+      <div class="bonus">
+        <img class="bonus-arte" src="imagens/bonus-5.webp" alt="" loading="lazy">
+        <div class="bonus-txt">
+          <span class="bonus-tag">Bônus 05</span>
+          <span class="preco"><s>R$57</s> <b>Grátis</b></span>
+          <h3>O Que a Bíblia Diz Sobre Beleza e Vaidade</h3>
+          <p>Um guia direto que mostra por que <strong>cuidar da sua aparência nunca foi vaidade</strong>, para você se arrumar com leveza e sem nenhuma culpa, sabendo que cuidar de você é honrar quem Ele fez você ser.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESCASSEZ -->
+    <div class="escassez" id="escassez">
+      <h3>Aproveite a oferta especial!</h3>
+      <p>O Guia Mulher Virtuosa custa <s class="caro">R$97</s>, mas apenas pelos <strong>próximos 15 minutos</strong> o valor será de <b class="barato">R$37</b> com <strong>todos os bônus grátis</strong>.</p>
+      <span class="expira">Oferta especial expira em:</span>
+      <div class="relogio" id="relogio">15:00</div>
+    </div>
+
+    <div class="caixa-oferta" id="oferta-box">
+      <ul class="itens">
+        <li><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Guia Mulher Virtuosa</span><span class="valor"><s>R$97</s></span></li>
+        <li><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Achadinhos Shein e Shopee</span><span class="valor"><s>R$47</s> <b>Grátis</b></span></li>
+        <li><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Instagram da Mulher Virtuosa</span><span class="valor"><s>R$77</s> <b>Grátis</b></span></li>
+        <li><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Looks de Praia e Piscina</span><span class="valor"><s>R$67</s> <b>Grátis</b></span></li>
+        <li><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Moda Fitness Cristã</span><span class="valor"><s>R$47</s> <b>Grátis</b></span></li>
+        <li><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Bíblia, Beleza e Vaidade</span><span class="valor"><s>R$57</s> <b>Grátis</b></span></li>
+        <li><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Atualizações contínuas</span><span class="valor"><b>Incluso</b></span></li>
+        <li><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Suporte prioritário</span><span class="valor"><b>Incluso</b></span></li>
+      </ul>
+      <p class="de">de R$ 392,00 por:</p>
+      <p class="por">R$ 37,00</p>
+      <p class="parcela">ou 6x de R$ 6,17 no cartão</p>
+      <p class="economia"><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Você economiza R$ 355,00</p>
+      <a class="cta" href="#" data-checkout>Quero acessar meus Looks!</a>
+      <p class="cta-nota">Compra segura · Acesso imediato no seu e-mail</p>
+    </div>
+
+
+
+
+  </div>
+</section>
+
+<!-- ===================== BLOCO 07 — GARANTIA ===================== -->
+<section class="faixa clara">
+  <div class="env">
+    <img class="selo-garantia" src="imagens/selo-garantia.webp" alt="Garantia de 28 dias" loading="lazy">
+    <h2 style="text-align:center">Garantia de <span>satisfação total</span></h2>
+    <div class="coracao">♥</div>
+    <p>Estamos tão confiantes de que o Mulher Virtuosa vai te ajudar a se vestir com mais beleza, elegância e leveza no dia a dia, que oferecemos uma <strong>garantia de satisfação total de 28 dias</strong>.</p>
+    <p>Se, por qualquer motivo, você sentir que os looks não combinaram com você, não se encaixaram no seu estilo ou simplesmente não foi o que você esperava, é só nos enviar uma mensagem e <strong>devolvemos 100% do seu investimento</strong>.</p>
+    <div class="tres"><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Sem perguntas</span><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Sem explicações</span><span><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span> Sem burocracia</span></div>
+    <p>A sua tranquilidade vem em primeiro lugar. Você pode comprar hoje, acessar o seu guia com calma, <strong>testar os looks no seu ritmo</strong> e aplicar no seu dia a dia.</p>
+    <p>E só continua com o Mulher Virtuosa se realmente perceber que os looks trouxeram mais beleza, praticidade e elegância pro seu guarda-roupa.</p>
+    <p class="destaque" style="margin-top:22px">O risco é totalmente nosso. A confiança e a leveza para se vestir bem são suas.</p>
+    <a class="cta" href="#" data-checkout>Quero testar por 28 dias!</a>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 08 — ANTES E DEPOIS ===================== -->
+<section class="faixa escura">
+  <div class="env">
+    <h2 style="text-align:center">Cada dia que passa é mais um dia vestindo <span>roupas que não são pra você!</span></h2>
+    <div class="colunas">
+      <div class="coluna hoje">
+        <img class="cena" src="imagens/cena-hoje.webp" alt="Mulher em dúvida com roupas espalhadas na cama" loading="lazy">
+        <h3>Essa é você hoje</h3>
+        <ul>
+          <li><span class="x">✗</span>Abre o guarda-roupa e sente que não tem nada pra vestir</li>
+          <li><span class="x">✗</span>Perde tempo tentando montar uma combinação que não funciona</li>
+          <li><span class="x">✗</span>Não aguenta mais olhar pras roupas que você usava antes</li>
+          <li><span class="x">✗</span>Gasta dinheiro comprando roupas por impulso</li>
+          <li><span class="x">✗</span>Repete sempre as mesmas roupas, porque são as únicas que te deixam segura</li>
+          <li><span class="x">✗</span>Se arruma e sente que ficou com cara de mais velha do que você é</li>
+        </ul>
+      </div>
+      <div class="coluna">
+        <img class="cena" src="imagens/cena-depois.webp" alt="Mulher arrumada se olhando no espelho" loading="lazy">
+        <h3>Essa é você com o Guia Mulher Virtuosa</h3>
+        <ul>
+          <li><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Sabe exatamente quais roupas combinam com você e com os seus valores</li>
+          <li><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Tem looks prontos, sem perder tempo</li>
+          <li><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Economiza dinheiro, comprando só as peças certas</li>
+          <li><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Monta looks novos toda semana, sem nunca repetir</li>
+          <li><span class="ok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6"/></svg></span>Se sente linda e admirada, sem nenhuma culpa</li>
+        </ul>
+      </div>
+    </div>
+    <p class="destaque" style="color:#F3E9EE;margin-top:26px">Você não precisa continuar sendo a primeira mulher. A segunda já pode ser você, hoje.</p>
+    <a class="cta" href="#" data-checkout>Quero acessar os meus Looks Agora!</a>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 09 — FAQ ===================== -->
+<section class="faixa">
+  <div class="env">
+    <h2 style="text-align:center">Ainda ficou <span>alguma dúvida?</span></h2>
+    <div class="coracao">♥</div>
+    <div class="faq">
+      <details open><summary>Como vou acessar o material?</summary><p>Após a confirmação do pagamento, você recebe o acesso imediato ao Mulher Virtuosa diretamente no seu e-mail. Pode abrir pelo celular, tablet ou computador, sempre que quiser montar um look, sem precisar baixar nada.</p></details>
+      <details><summary>Serve pra mim se eu só uso saia e vestido?</summary><p>Sim. Você escolhe as peças que usa, e o Mulher Virtuosa monta os looks só com elas. Se você não usa calça, nenhum look vai vir com calça.</p></details>
+      <details><summary>Os looks são atuais ou têm cara de roupa antiga?</summary><p>São atuais. O Mulher Virtuosa foi criado justamente pra provar que dá pra ser elegante e estar na moda sem precisar de decote, roupa curta ou justa demais.</p></details>
+      <details><summary>Serve pro dia a dia ou só pra igreja?</summary><p>Serve pra tudo. Os looks são organizados por ocasião e clima, então você tem opção pro trabalho, pro dia a dia, pra igreja, pra um evento e pra qualquer compromisso.</p></details>
+      <details><summary>Preciso entender de moda pra usar?</summary><p>Não. Você não precisa saber nada de teoria de estilo. O material já entrega o look pronto: é só escolher a ocasião e o clima, e copiar a combinação.</p></details>
+      <details><summary>Vou precisar trocar todo o meu guarda-roupa?</summary><p>Não. A maior parte das 15 peças-chave você provavelmente já tem. E as que faltarem são peças básicas, de lojas acessíveis, com o link já conferido lá dentro.</p></details>
+      <details><summary>E se eu comprar uma peça e não conseguir usar?</summary><p>Os links já são conferidos e escolhidos dentro dos seus valores, o que reduz bastante o risco de comprar uma peça bonita que fica parada no guarda-roupa.</p></details>
+      <details><summary>Como funciona a garantia de 28 dias?</summary><p>Você tem 28 dias de garantia incondicional. Se por qualquer motivo sentir que o material não serve pra sua realidade, basta pedir o reembolso e devolvemos 100% do valor investido.</p></details>
+    </div>
+    <a class="cta" href="#" data-checkout>Quero acessar os meus Looks Agora!</a>
+  </div>
+</section>
+
+<footer class="rodape">
+  Mulher Virtuosa © 2026 — Todos os direitos reservados.<br>
+  Este produto não garante resultados, que dependem do uso individual. Ao comprar, você concorda com os termos de uso e a política de privacidade.
+</footer>
+
+
+  </section>
+</main>
+
+<!-- Barra visível só com MODO_TESTE = true -->
+<div class="barra-teste">
+  <button id="voltar">← Voltar</button>
+  <button id="ir4">↺ Ir para a etapa 4</button>
+  <button id="ir1">⟲ Recomeçar</button>
+  <button id="verpv">📄 Página de vendas</button>
+</div>
+
+<script>
+(function(){
+  const etapas = [...document.querySelectorAll(".etapa")];
+  const fio = document.getElementById("fio");
+  const respostas = {};
+  let atual = 0;
+  const voltar = document.getElementById("voltar");
+  if(MODO_TESTE) document.body.classList.add("teste");
+  const TOTAL_PERGUNTAS = 8;
+
+  function mostrar(n){
+    atual = n;
+    etapas.forEach(s => s.classList.toggle("ativa", +s.dataset.etapa === n));
+    document.body.classList.toggle("abertura-ativa", n === 0);
+    document.body.classList.toggle("pv-ativa", n === 11);
+    fio.style.width = (n >= 9 ? 100 : (Math.max(n,0)/TOTAL_PERGUNTAS)*100) + "%";
+    window.scrollTo({top:0,behavior:"instant"});
+    if(n === 9){ rodarCarregamento(); adiantarPV(); }
+    if(n === 10) montarDiagnostico();
+    if(n === 11) montarPV();
+    if(MODO_TESTE) voltar.disabled = (n === 0);
+  }
+
+  function registrar(el, chave){
+    respostas["e"+chave] = el.dataset.valor;
+    el.classList.add("marcada");
+    // if(window.fbq) fbq('trackCustom','QuizEtapa'+chave);
+    setTimeout(() => { el.classList.remove("marcada"); mostrar(chave === 8 ? 9 : chave + 1); }, 260);
+  }
+
+  etapas.forEach(sec => {
+    const n = +sec.dataset.etapa;
+    sec.querySelectorAll("[data-valor]").forEach(btn => btn.addEventListener("click", () => registrar(btn, n)));
+    const avanca = sec.querySelector("[data-avanca]");
+    if(avanca) avanca.addEventListener("click", () => mostrar(n+1));
+  });
+
+  const mensagens = [
+    "Separando os looks que combinam com o seu estilo e os seus valores…",
+    "Ajustando as peças para o clima da sua cidade…",
+    "Montando as combinações com as peças que você mais gosta de usar…",
+    "Seus looks estão quase prontos…"
+  ];
+  function rodarCarregamento(){
+    const anel = document.getElementById("anel"), pct = document.getElementById("pct"), status = document.getElementById("status");
+    let p = 0, i = 0;
+    status.textContent = mensagens[0];
+    const t = setInterval(() => {
+      p += 2;
+      anel.style.setProperty("--pct", p + "%");
+      pct.textContent = p + "%";
+      const novo = Math.min(Math.floor(p/25), 3);
+      if(novo !== i){ i = novo; status.textContent = mensagens[i]; }
+      if(p >= 100){ clearInterval(t); setTimeout(() => mostrar(10), 600); }
+    }, 80);   // 50 passos x 80ms = 4 segundos
+  }
+
+  // ---------- DIAGNÓSTICO PERSONALIZADO (etapa 10) ----------
+  // Para trocar o texto, edite só as frases abaixo. O restante se monta sozinho.
+  const FRASE_PECA = {
+    "saia":    "prefere <b>saias</b>",
+    "vestido": "prefere <b>vestidos</b>",
+    "calca":   "prefere <b>calças</b>",
+    "todas":   "usa <b>saia, vestido e calça</b>"
+  };
+  const FRASE_CLIMA = {
+    "quente": "mora onde faz <b>calor a maior parte do ano</b>",
+    "misto":  "mora onde <b>às vezes faz calor e às vezes faz frio</b>",
+    "frio":   "mora onde faz <b>frio a maior parte do ano</b>"
+  };
+  // 4 ramificações de imagem — 3 looks + 1 card bloqueado, em grade 2x2.
+  // Para trocar por arquivos externos, substitua o data:image/... por "imagens/looks/nome.jpg"
+  const IMG = {"vestido-1": "imagens/looks/vestido-1.webp", "vestido-2": "imagens/looks/vestido-2.webp", "vestido-3": "imagens/looks/vestido-3.webp", "vestido-bloqueado": "imagens/looks/vestido-bloqueado.webp", "calca-1": "imagens/looks/calca-1.webp", "calca-2": "imagens/looks/calca-2.webp", "calca-3": "imagens/looks/calca-3.webp", "calca-bloqueado": "imagens/looks/calca-bloqueado.webp", "saia-1": "imagens/looks/saia-1.webp", "saia-2": "imagens/looks/saia-2.webp", "saia-3": "imagens/looks/saia-3.webp", "saia-bloqueado": "imagens/looks/saia-bloqueado.webp"};
+  const LOOKS = {
+    "saia":    [IMG["saia-1"], IMG["saia-2"], IMG["saia-3"], IMG["saia-bloqueado"]],
+    "vestido": [IMG["vestido-1"], IMG["vestido-2"], IMG["vestido-3"], IMG["vestido-bloqueado"]],
+    "calca":   [IMG["calca-1"], IMG["calca-2"], IMG["calca-3"], IMG["calca-bloqueado"]],
+    "todas":   [IMG["vestido-1"], IMG["saia-1"], IMG["calca-1"], IMG["vestido-bloqueado"]]
+  };
+
+  function montarDiagnostico(){
+    const peca  = respostas.e4 || "todas";
+    const clima = respostas.e5 || "misto";
+
+    document.getElementById("diagnostico").innerHTML =
+      "Como você " + FRASE_PECA[peca] + " e " + FRASE_CLIMA[clima] +
+      ", separamos estes looks incríveis para você:";
+
+    const grade = document.getElementById("grade");
+    grade.innerHTML = "";
+    LOOKS[peca].forEach((src, i) => {
+      const ultimo = (i === LOOKS[peca].length - 1);
+      const el = document.createElement("div");
+      el.className = "look" + (ultimo ? " bloqueado" : "") + (src ? "" : " vazio");
+      if(src){
+        const img = document.createElement("img");
+        img.src = src; img.alt = ""; img.loading = "lazy";
+        el.appendChild(img);
+        if(ultimo) el.addEventListener("click", irParaOferta);
+      } else {
+        el.textContent = "FOTO " + (i+1) + " — " + peca.toUpperCase();
+      }
+      grade.appendChild(el);
+    });
+  }
+
+  function irParaOferta(){
+    // if(window.fbq) fbq('track','Lead');
+    mostrar(11);
+  }
+  document.getElementById("finalizar").addEventListener("click", irParaOferta);
+
+  // Da etapa 10 o voltar pula o carregamento (senão ele reinicia e joga pra frente de novo)
+  voltar.addEventListener("click", () => {
+    if(atual === 10) return mostrar(8);
+    if(atual > 0) mostrar(atual - 1);
+  });
+  document.getElementById("ir4").addEventListener("click", () => mostrar(4));
+  document.getElementById("ir1").addEventListener("click", () => mostrar(0));
+  document.getElementById("verpv").addEventListener("click", () => mostrar(11));
+
+  // ---------- CARROSSEL DA ABERTURA ----------
+  (function(){
+    const trilha = document.getElementById("trilha");
+    const pontos = document.getElementById("pontos");
+    const slides = trilha.children.length;
+    let i = 0, pausa = 0;
+
+    for(let k = 0; k < slides; k++){
+      const p = document.createElement("span");
+      if(k === 0) p.className = "ativo";
+      p.addEventListener("click", () => { ir(k); pausa = Date.now() + 5000; });
+      pontos.appendChild(p);
+    }
+    function ir(n){
+      i = (n + slides) % slides;
+      const alvo = trilha.clientWidth * i;
+      trilha.scrollTo({left: alvo, behavior: "smooth"});
+      // alguns navegadores de celular ignoram a rolagem suave: garante o salto
+      setTimeout(() => { if(Math.abs(trilha.scrollLeft - alvo) > 5) trilha.scrollLeft = alvo; }, 450);
+    }
+    trilha.addEventListener("scroll", () => {
+      const n = Math.round(trilha.scrollLeft / trilha.clientWidth);
+      if(n !== i){ i = n; }
+      [...pontos.children].forEach((p,k) => p.classList.toggle("ativo", k === i));
+    });
+    // pausa o automático quando ela mexe com o dedo
+    trilha.addEventListener("touchmove", () => { pausa = Date.now() + 5000; }, {passive:true});
+
+    setInterval(() => { if(Date.now() > pausa) ir(i + 1); }, 2000);   // troca de slide
+  })();
+
+  // ---------- PROVA SOCIAL DINÂMICA (abertura) ----------
+  (function(){
+    const el = document.getElementById("online");
+    let n = 145 + Math.floor(Math.random() * 25);   // 145 a 169
+    el.textContent = n;
+    setInterval(() => {
+      n += (Math.random() < 0.7)
+        ? (1 + Math.floor(Math.random() * 4))       // sobe 1 a 4
+        : -(1 + Math.floor(Math.random() * 3));     // desce 1 a 3
+      n = Math.min(210, Math.max(138, n));          // piso 138, teto 210
+      el.textContent = n;
+    }, 3500);
+  })();
+
+  // ---------- ADIANTA AS IMAGENS DA PÁGINA DE VENDAS ----------
+  let pvAdiantada = false;
+  function adiantarPV(){
+    if(pvAdiantada) return;
+    pvAdiantada = true;
+    const pv = document.getElementById("pv");
+    if(!pv) return;
+    [...pv.querySelectorAll("img")].slice(0, 14).forEach((im, i) => {
+      setTimeout(() => { const p = new Image(); p.src = im.getAttribute("src"); }, i * 120);
+    });
+  }
+
+  // ---------- PÁGINA DE VENDAS (monta ao entrar) ----------
+  let pvMontada = false;
+  function pvq(sel){ return document.querySelectorAll("#pv " + sel); }
+  function montarPV(){
+    window.scrollTo({top:0,behavior:"instant"});
+    if(pvMontada) return;
+    pvMontada = true;
+    // Checkout preservando UTMs
+      const params = location.search;
+      pvq("[data-checkout]").forEach(a => {
+        if(a.classList.contains("ancora")) return;   // só o botão de âncora fica de fora
+        a.href = URL_CHECKOUT;                       // link do checkout, exatamente como está lá em cima
+        // a.addEventListener("click", () => { if(window.fbq) fbq('track','InitiateCheckout'); });
+      });
+    
+      // Demo do app (bloco 03)
+      const p2 = document.querySelector("#pv-p2"), p3 = document.querySelector("#pv-p3");
+      pvq("[data-ocasiao]").forEach(c => c.addEventListener("click", () => {
+        pvq("[data-ocasiao]").forEach(x => x.classList.remove("marcada"));
+        c.classList.add("marcada"); p2.classList.remove("oculto");
+      }));
+      pvq("[data-clima]").forEach(c => c.addEventListener("click", () => {
+        pvq("[data-clima]").forEach(x => x.classList.remove("marcada"));
+        c.classList.add("marcada"); p3.classList.remove("oculto");
+      }));
+    
+      // Botão de âncora: rola a página inteira, devagar, até a oferta
+    pvq("a.ancora").forEach(a => a.addEventListener("click", e => {
+      e.preventDefault();
+      const alvo = document.querySelector(a.getAttribute("href"));
+      if(!alvo) return;
+      const inicio = window.scrollY;
+      const dura = 1100;                       // tempo da viagem, em ms
+      const t0 = performance.now();
+      const destino = () => alvo.getBoundingClientRect().top + window.scrollY - 12;
+      if(window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+        window.scrollTo(0, destino()); return;
+      }
+      function passo(t){
+        const p = Math.min((t - t0) / dura, 1);
+        const suave = p < .5 ? 2*p*p : 1 - Math.pow(-2*p + 2, 2)/2;
+        // recalcula o destino a cada quadro: se alguma imagem carregar e empurrar a
+        // página, a rolagem acompanha em vez de parar no lugar errado
+        window.scrollTo(0, inicio + (destino() - inicio) * (suave / (p || 1)) * p);
+        if(p < 1) requestAnimationFrame(passo);
+        else window.scrollTo(0, destino());     // ajuste final, já com tudo carregado
+      }
+      requestAnimationFrame(passo);
+    }));
+
+    // Cronômetro de 15 minutos
+    (function(){
+      const el = document.getElementById("relogio");
+      if(!el) return;
+      let s = 15 * 60;   // MINUTOS x 60 — mude aqui para outro tempo
+      const t = setInterval(() => {
+        s--;
+        if(s <= 0){ s = 0; clearInterval(t); el.classList.add("acabou"); }
+        el.textContent = String(Math.floor(s/60)).padStart(2,"0") + ":" + String(s%60).padStart(2,"0");
+      }, 1000);
+    })();
+
+    // Carrossel de depoimentos
+    (function(){
+      const trilha = document.getElementById("dep-trilha");
+      const pontos = document.getElementById("dep-pontos");
+      if(!trilha) return;
+      const n = trilha.children.length;
+      let i = 0, pausa = 0;
+      for(let k = 0; k < n; k++){
+        const p = document.createElement("span");
+        if(k === 0) p.className = "ativo";
+        p.addEventListener("click", () => { ir(k); pausa = Date.now() + 8000; });
+        pontos.appendChild(p);
+      }
+      function ir(x){ i = (x + n) % n; trilha.scrollTo({left: trilha.clientWidth * i, behavior:"smooth"}); }
+      trilha.addEventListener("scroll", () => {
+        i = Math.round(trilha.scrollLeft / trilha.clientWidth);
+        [...pontos.children].forEach((p,k) => p.classList.toggle("ativo", k === i));
+      });
+      trilha.addEventListener("touchstart", () => { pausa = Date.now() + 8000; }, {passive:true});
+      setInterval(() => { if(Date.now() > pausa) ir(i + 1); }, 3500);
+    })();
+
+    // Entrada suave dos blocos conforme ela rola
+    const alvos = pvq(".lista li, .bonus, .escassez, .depo img, .grade-looks, .contraste, .dentro, .selo-garantia, .coluna, .faq details, .caixa-oferta, .tela, .moldura, .selo-garantia, .economia, .dep-carrossel");
+    alvos.forEach(el => el.classList.add("surge"));
+    const obs = new IntersectionObserver((linhas, o) => {
+      linhas.forEach((linha, i) => {
+        if(linha.isIntersecting){
+          setTimeout(() => linha.target.classList.add("visivel"), i * 70);
+          o.unobserve(linha.target);
+        }
+      });
+    }, {threshold:.12, rootMargin:"0px 0px -40px 0px"});
+    alvos.forEach(el => obs.observe(el));
+
+
+  }
+
+  // ---------- ADIANTA O DOWNLOAD DAS PRÓXIMAS IMAGENS ----------
+  (function(){
+    if(!PRE_CARREGAR.length) return;
+    const baixar = () => PRE_CARREGAR.forEach((src, i) => {
+      setTimeout(() => { const im = new Image(); im.src = src; }, i * 250);
+    });
+    if("requestIdleCallback" in window) requestIdleCallback(baixar, {timeout:2500});
+    else setTimeout(baixar, 1500);
+  })();
+
+  mostrar(0);
+})();
+</script>
+</body>
+</html>
