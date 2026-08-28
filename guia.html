@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Guia Mulher Virtuosa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --branco:#FFFFFF; --tinta:#141414; --cinza:#4B4750;
+  --carmim:#D81E40; --rosa-linha:#F6DDE4; --rosa-fundo:#FDF7F9; --rosa-forte:#EFAFC3;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--branco);color:var(--tinta);
+  font-family:"Figtree",-apple-system,BlinkMacSystemFont,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+img{display:block;max-width:100%}
+
+/* ---------------- topo ---------------- */
+.topo{
+  position:fixed;top:0;left:0;right:0;z-index:30;background:rgba(255,255,255,.96);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--rosa-linha);
+  padding:calc(10px + env(safe-area-inset-top)) 14px 0;
+}
+.linha-topo{display:flex;align-items:center;justify-content:space-between;padding-bottom:9px}
+.marca{font-family:"Playfair Display",Georgia,serif;font-size:19px;font-weight:500}
+.marca span{color:var(--carmim)}
+.icones{display:flex;gap:14px;color:var(--carmim);font-size:16px}
+.filtros{display:flex;gap:7px;overflow-x:auto;padding:0 0 9px;scrollbar-width:none}
+.filtros::-webkit-scrollbar{display:none}
+.filtros button{
+  flex:0 0 auto;background:var(--branco);border:1.5px solid var(--rosa-linha);
+  color:var(--cinza);font:inherit;font-size:12.5px;font-weight:600;
+  padding:7px 14px;border-radius:99px;cursor:pointer;
+}
+.filtros button.on{background:var(--carmim);border-color:var(--carmim);color:#fff}
+
+/* ---------------- feed ---------------- */
+.feed{
+  height:100dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:calc(96px + env(safe-area-inset-top)) 0 calc(78px + env(safe-area-inset-bottom));
+  scrollbar-width:none;
+}
+.feed::-webkit-scrollbar{display:none}
+
+/* divisor de seção */
+.secao{padding:22px 16px 12px}
+.secao .rot{display:flex;align-items:center;gap:10px;color:var(--carmim);font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.secao .rot::before,.secao .rot::after{content:"";flex:1;height:1px;background:var(--rosa-linha)}
+.secao h2{font-family:"Playfair Display",Georgia,serif;font-size:27px;text-align:center;margin-top:8px}
+.secao p{text-align:center;font-size:13px;color:var(--cinza);margin-top:3px}
+
+/* card do look */
+.look{padding:0 8px 16px}
+.moldura{
+  border:1.5px solid var(--rosa-linha);border-radius:16px;overflow:hidden;
+  background:var(--branco);box-shadow:0 4px 16px rgba(216,30,64,.07);position:relative;
+}
+.moldura img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.etiqueta{
+  position:absolute;top:10px;left:10px;background:rgba(255,255,255,.94);
+  color:var(--carmim);font-size:10.5px;font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;padding:6px 11px;border-radius:99px;
+}
+.salvar{
+  position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;
+  color:var(--carmim);font-size:16px;
+}
+.legenda{padding:12px 14px 14px}
+.cabeca{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.legenda h3{font-family:"Playfair Display",Georgia,serif;font-size:21px;font-weight:600;color:var(--carmim);line-height:1.15}
+.numero{font-size:11px;font-weight:700;color:var(--rosa-forte);letter-spacing:.06em;flex:0 0 auto}
+.pecas{font-size:14px;line-height:1.45;color:var(--cinza);margin-top:6px}
+.pecas b{color:var(--tinta);font-weight:700}
+.ocasioes{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ocasioes span{
+  background:var(--rosa-fundo);border:1px solid var(--rosa-linha);color:var(--cinza);
+  font-size:11.5px;font-weight:600;padding:5px 10px;border-radius:99px;
+}
+.rodape-card{
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px dashed var(--rosa-linha);margin-top:12px;padding-top:10px;
+  font-size:12px;color:var(--cinza);
+}
+.rodape-card b{color:var(--carmim);font-weight:800}
+
+/* fim da lista */
+.fim{text-align:center;padding:24px 24px 8px}
+.fim .coracao{color:var(--carmim);font-size:18px}
+.fim h3{font-family:"Playfair Display",Georgia,serif;font-size:23px;margin:8px 0 6px}
+.fim p{font-size:13.5px;color:var(--cinza);line-height:1.5}
+
+/* barra inferior */
+.barra{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.97);
+  backdrop-filter:blur(10px);border-top:1px solid var(--rosa-linha);
+  display:flex;justify-content:space-around;align-items:center;
+  padding:9px 6px calc(9px + env(safe-area-inset-bottom));
+}
+.barra a{
+  display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;
+  color:#B9A3AC;font-size:10px;font-weight:700;letter-spacing:.02em;
+}
+.barra a.on{color:var(--carmim)}
+.barra i{font-style:normal;font-size:17px}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="linha-topo">
+    <div class="marca">Mulher <span>Virtuosa</span></div>
+    <div class="icones"><span>♡</span><span>☰</span></div>
+  </div>
+  <div class="filtros">
+    <button class="on">Todos os looks</button>
+    <button>Igreja</button>
+    <button>Trabalho</button>
+    <button>Dia a dia</button>
+    <button>Casual</button>
+    <button>Elegante</button>
+    <button>Eventos</button>
+  </div>
+</header>
+
+<main class="feed" id="feed"></main>
+
+<nav class="barra">
+  <a href="#" class="on"><i>⌂</i>Início</a>
+  <a href="#"><i>✦</i>Looks</a>
+  <a href="#"><i>⬗</i>Guarda-roupa</a>
+  <a href="#"><i>♡</i>Favoritos</a>
+  <a href="#"><i>☺</i>Perfil</a>
+</nav>
+
+<script>
+const SECOES = {"Vestidos": [{"src": "imagens/looks/vestido-1.webp", "nome": "Amarelo Manteiga", "pecas": "<b>Vestido midi</b> gola alta · Bolsa estruturada · Scarpin nude", "ocasioes": ["Igreja", "Elegante", "Eventos"]}, {"src": "imagens/looks/vestido-2.webp", "nome": "Terracota Renda", "pecas": "<b>Vestido midi</b> com detalhe em renda · Sandália de tiras", "ocasioes": ["Elegante", "Eventos"]}, {"src": "imagens/looks/vestido-3.webp", "nome": "Vinho Elegante", "pecas": "<b>Vestido midi</b> manga bufante · Bolsa off-white", "ocasioes": ["Igreja", "Eventos"]}, {"src": "imagens/looks/extra-2.webp", "nome": "Vinho Peplum", "pecas": "<b>Conjunto de tricô</b> peplum · Bolsa e scarpin vinho", "ocasioes": ["Elegante", "Eventos"]}], "Saias": [{"src": "imagens/looks/saia-1.webp", "nome": "Bege & Chocolate", "pecas": "<b>Saia midi rodada</b> · Blusa ombro a ombro · Cinto fino", "ocasioes": ["Dia a dia", "Trabalho"]}, {"src": "imagens/looks/saia-2.webp", "nome": "Preto & Listras", "pecas": "<b>Saia longa evasê</b> · Blusa listrada · Cinto preto", "ocasioes": ["Igreja", "Trabalho"]}, {"src": "imagens/looks/saia-3.webp", "nome": "Branco & Jeans", "pecas": "<b>Saia midi branca</b> · Colete jeans · Scarpin bicolor", "ocasioes": ["Casual", "Dia a dia"]}, {"src": "imagens/looks/extra-1.webp", "nome": "Camel & Café", "pecas": "<b>Saia longa camel</b> · Suéter gola polo · Bolsa preta", "ocasioes": ["Igreja", "Dia a dia"]}], "Calças": [{"src": "imagens/looks/calca-1.webp", "nome": "Preto & Branco", "pecas": "<b>Calça pantalona</b> preta · Blusa cropped · Sandália nude", "ocasioes": ["Casual", "Trabalho"]}, {"src": "imagens/looks/calca-2.webp", "nome": "Alfaiataria Listrada", "pecas": "<b>Calça de alfaiataria</b> · Camisa listrada · Sandália preta", "ocasioes": ["Trabalho", "Elegante"]}, {"src": "imagens/looks/calca-3.webp", "nome": "Off-White & Marrom", "pecas": "<b>Calça pantalona</b> off-white · Camiseta · Cinto marrom", "ocasioes": ["Dia a dia", "Casual"]}, {"src": "imagens/looks/extra-3.webp", "nome": "Chocolate Alfaiataria", "pecas": "<b>Calça marrom</b> · Blusa ombro só · Scarpin nude", "ocasioes": ["Trabalho", "Casual"]}]};
+
+const feed = document.getElementById("feed");
+let n = 0;
+const total = Object.values(SECOES).reduce((s, l) => s + l.length, 0);
+
+Object.entries(SECOES).forEach(([secao, looks]) => {
+  const div = document.createElement("div");
+  div.className = "secao";
+  div.innerHTML = '<div class="rot">' + secao + '</div>' +
+                  '<h2>' + looks.length + ' looks de ' + secao.toLowerCase() + '</h2>' +
+                  '<p>Escolha o seu e monte com o que você já tem</p>';
+  feed.appendChild(div);
+
+  looks.forEach(lk => {
+    n++;
+    const s = document.createElement("section");
+    s.className = "look";
+    s.innerHTML =
+      '<div class="moldura">' +
+        '<div class="etiqueta">' + secao + '</div>' +
+        '<div class="salvar">♡</div>' +
+        '<img src="' + lk.src + '" alt="" ' + (n <= 2 ? 'fetchpriority="high"' : 'loading="lazy"') + '>' +
+        '<div class="legenda">' +
+          '<div class="cabeca"><h3>' + lk.nome + '</h3><span class="numero">LOOK ' + String(n).padStart(2,"0") + '</span></div>' +
+          '<p class="pecas">' + lk.pecas + '</p>' +
+          '<div class="ocasioes">' + lk.ocasioes.map(o => '<span>' + o + '</span>').join('') + '</div>' +
+          '<div class="rodape-card"><span>Peças fáceis de achar</span><b>Ver onde comprar ›</b></div>' +
+        '</div>' +
+      '</div>';
+    feed.appendChild(s);
+  });
+});
+
+const fim = document.createElement("div");
+fim.className = "fim";
+fim.innerHTML = '<div class="coracao">♥</div>' +
+  '<h3>' + total + ' looks para você</h3>' +
+  '<p>Novos looks entram toda semana,<br>sempre dentro dos seus valores.</p>';
+feed.appendChild(fim);
+</script>
+</body>
+</html>

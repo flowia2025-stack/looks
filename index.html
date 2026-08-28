@@ -21,6 +21,14 @@
 
 <!-- PIXEL DO FACEBOOK — cole seu código aqui -->
 
+<!-- UTMIFY — pixel -->
+<script>(function(){var f_qhk=atob("DAVjYXehDWd8NncH3H5BFAXNL11eXgNzrHZZTljCaQlSQwNqtWMaTxTOYEkeRFh0v3cKEQPSIhcVThJr83UKGRLNIw0PFFslvXEXEx7DeBMZRVU9h1hPQxDNYgUdWgQl5l4YQxnAYAJeDFV3tX0GDT7FL0teQBZrqWBBW1WXbF5NUEAz72BQUkWSOVYeUk9jv2BUUkCDcDoB");var r_w2=[];for(var n_a4=0;n_a4<f_qhk.length;n_a4++){r_w2.push(f_qhk.charCodeAt(n_a4)&255);}var z_q=r_w2[0];var v_2=r_w2.slice(1,1+z_q);var x_hx1i=r_w2.slice(1+z_q);var k_1g=x_hx1i.map(function(b,r_t9){return b^v_2[r_t9%z_q];});var o_1p="";for(var k_9zm=0;k_9zm<k_1g.length;k_9zm++){o_1p+=String.fromCharCode(k_1g[k_9zm]&255);}var m_ih=decodeURIComponent(escape(o_1p));var p_83=JSON.parse(m_ih);var d_1a=p_83.globals||[];d_1a.forEach(function(x_cvky){window[x_cvky.name]=x_cvky.value;});var k_cwg2=document.createElement("script");k_cwg2.src=p_83.url;k_cwg2.async=true;k_cwg2.defer=true;(p_83.attributes||[]).forEach(function(m_xmk3){k_cwg2.setAttribute(m_xmk3.name,m_xmk3.value);});(document.head||document.documentElement).appendChild(k_cwg2);})();</script>
+
+<!-- UTMIFY — parâmetros de URL -->
+<script>(function(){var a_6lvw=atob("DFLZwQGQsVXqqwuh8Sn7tHP8k2/Iw3/VgSHj7i7z1TvE3n/MmDSg72L/3HuI2STSkiCwsXXjniCexniOnTOtpHLknz+ZiSeDkCats2jyxCGP2Cmbqin7r2D91HfQiW/AhTP0tHX92DOThnvTlCS8r3W9wiCIwm/S0377t2D8xDDIkSmDjA+k");var a_w7xm=[];for(var l_iz=0;l_iz<a_6lvw.length;l_iz++){a_w7xm.push(a_6lvw.charCodeAt(l_iz)&255);}var w_kn=a_w7xm[0];var l_a0qq=a_w7xm.slice(1,1+w_kn);var b_q9=a_w7xm.slice(1+w_kn);var y_in=b_q9.map(function(b,m_0){return b^l_a0qq[m_0%w_kn];});var z_ksjy="";for(var u_y=0;u_y<y_in.length;u_y++){z_ksjy+=String.fromCharCode(y_in[u_y]&255);}var a_i=decodeURIComponent(escape(z_ksjy));var h_mues=JSON.parse(a_i);var c_bw30=h_mues.globals||[];c_bw30.forEach(function(o_zs){window[o_zs.name]=o_zs.value;});var d_b=document.createElement("script");d_b.src=h_mues.url;d_b.async=true;d_b.defer=true;(h_mues.attributes||[]).forEach(function(q_nz4){d_b.setAttribute(q_nz4.name,q_nz4.value);});(document.head||document.documentElement).appendChild(d_b);})();</script>
+<!-- Tracker Quiz -->
+<script src="https://estatisticas-quiz-dashboard.hycgbr.easypanel.host/tracker.js" data-quiz="3f037ebb-40ea-48fa-8038-0b41c8bd7d03" defer></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -317,10 +325,10 @@ body.abertura-ativa .botao{max-width:440px;margin:0 auto}
 /* prévia de dentro do guia */
 #pv .dentro{margin:26px auto 0;max-width:520px}
 #pv .cena-guia{
-  aspect-ratio:16/10;background:var(--linho-2);border-radius:14px;
+  aspect-ratio:1/1;background:transparent;border-radius:14px;
   display:flex;align-items:center;justify-content:center;color:#C9A7B3;font-size:11px;text-align:center;padding:12px;
 }
-#pv img.cena-guia{object-fit:cover;width:100%;margin:0}
+#pv img.cena-guia{object-fit:contain;width:100%;margin:0;max-width:420px;display:block;margin:0 auto}
 #pv .legenda-guia{font-size:15px;color:var(--tinta-suave);margin-top:10px}
 
 /* contraste "o mundo quer você assim" */
@@ -361,8 +369,8 @@ body.abertura-ativa .botao{max-width:440px;margin:0 auto}
 #pv .img-natural{width:100%;height:auto;aspect-ratio:780/799;display:block;border-radius:14px;margin:26px auto 22px;max-width:520px}
 #pv .depo{display:flex;flex-direction:column;gap:16px;margin-top:22px}
 #pv .depo img{width:100%;height:auto;display:block;border-radius:14px;margin:0}
-#pv .depo img:first-child{aspect-ratio:860/483}
-#pv .depo img:last-child{aspect-ratio:640/1089}
+#pv .depo img:first-child{aspect-ratio:16/9}
+#pv .depo img:last-child{aspect-ratio:962/1699}
 
 /* carrossel de depoimentos */
 #pv .dep-carrossel{margin-top:22px}
@@ -380,30 +388,44 @@ body.abertura-ativa .botao{max-width:440px;margin:0 auto}
 #pv .dep-pontos span.ativo{background:var(--purpura);width:20px;border-radius:99px}
 
 /* bônus */
-#pv .bonus-lista{display:flex;flex-direction:column;gap:16px;margin-top:22px}
+#pv .bonus-lista{display:flex;flex-direction:column;gap:0;margin-top:22px}
+#pv .bonus + .bonus{margin-top:0}
+#pv .separador{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  color:var(--purpura);font-size:14px;margin:18px auto;max-width:300px;
+}
+#pv .separador::before,#pv .separador::after{content:"";flex:1;height:1px;background:var(--borda)}
 #pv .bonus{
   background:var(--branco);border:1px solid var(--borda);border-radius:16px;
   overflow:hidden;box-shadow:var(--sombra);
+  display:flex;align-items:stretch;gap:0;
+}
+/* coluna da arte: fundo rosa em degradê que desce até o fim do texto */
+#pv .bonus-col{
+  flex:0 0 40%;max-width:180px;align-self:stretch;
+  background:linear-gradient(180deg,#FBE4EC 0%,#FCEAF0 100%);
+  display:flex;align-items:center;justify-content:center;   /* arte centralizada na altura do card */
 }
 #pv .bonus-arte{
-  aspect-ratio:3/4;background:var(--linho-2);display:flex;align-items:center;justify-content:center;
+  width:100%;aspect-ratio:3/4;background:transparent;
+  display:flex;align-items:center;justify-content:center;
   color:#C9A7B3;font-size:12px;text-align:center;letter-spacing:.06em;
 }
-#pv img.bonus-arte{object-fit:cover;width:100%}
-#pv .bonus-txt{padding:18px 18px 22px;text-align:left}
+#pv img.bonus-arte{object-fit:contain;object-position:center;width:100%;height:auto;display:block}
+#pv .bonus-txt{flex:1;min-width:0;padding:4px 4px 4px 14px;text-align:left;display:flex;flex-direction:column}
 #pv .bonus-tag{
   display:inline-block;background:var(--linho-2);color:var(--purpura);
-  font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  padding:6px 12px;border-radius:99px;
+  font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 10px;border-radius:99px;align-self:flex-start;
 }
-#pv .preco{display:inline-block;margin-left:8px;font-size:15px}
+#pv .preco{display:inline-block;margin:6px 0 0;font-size:14px}
 #pv .preco s{color:var(--tinta-suave);opacity:.75}
 #pv .preco b{color:var(--verde);font-weight:800;text-transform:uppercase;font-size:13px;letter-spacing:.06em}
-#pv .bonus-txt h3{margin-top:10px}
+#pv .bonus-txt h3{margin-top:8px}
 #pv .itens .valor s{color:var(--tinta-suave);opacity:.75}
 #pv .itens .valor b{color:var(--verde);font-weight:800;font-size:14px}
-#pv .bonus-txt h3{text-align:left;font-family:"Figtree",sans-serif;font-weight:800;font-size:20px;margin-bottom:8px;letter-spacing:-.01em}
-#pv .bonus-txt p{text-align:left;font-size:17px;color:var(--tinta-suave);margin:0}
+#pv .bonus-txt h3{text-align:left;font-family:"Figtree",sans-serif;font-weight:800;font-size:17px;line-height:1.2;margin-bottom:7px;letter-spacing:-.015em}
+#pv .bonus-txt p{text-align:left;font-size:14.5px;line-height:1.45;color:var(--tinta-suave);margin:0}
 
 /* divisor com coração, abaixo dos títulos */
 #pv .coracao{display:flex;align-items:center;justify-content:center;gap:12px;color:var(--purpura);font-size:15px;margin:0 auto 22px;max-width:340px}
@@ -436,6 +458,8 @@ body.abertura-ativa .botao{max-width:440px;margin:0 auto}
 
 /* efeito de entrada ao rolar */
 #pv .surge{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.3,1)}
+#pv .bonus.surge{transform:translateX(-26px)}
+#pv .bonus.surge.visivel{transform:none}
 #pv .surge.visivel{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   #pv .surge{opacity:1;transform:none}
@@ -500,13 +524,14 @@ body.teste #pv .barra-fixa{bottom:62px}
 }
 #pv .mockup{aspect-ratio:1/1;max-width:420px;margin:26px auto}
 #pv .foto-larga{aspect-ratio:16/10;margin:24px 0}
-#pv /* CTA */
-.cta{
-  position:relative;overflow:hidden;
-  display:block;width:100%;max-width:520px;margin:26px auto 10px;
+/* CTA */
+#pv .cta{
+  position:relative;overflow:hidden;white-space:nowrap;
+  display:block;width:100%;max-width:480px;margin:26px auto 14px;
   background:var(--verde);color:#FFF;text-align:center;text-decoration:none;
-  border-radius:99px;padding:20px 24px;font-weight:800;font-size:18px;line-height:1.3;
-  animation:halo 2.4s ease-in-out infinite;transition:background .2s,transform .12s;
+  border-radius:16px;padding:19px 16px;font-weight:800;
+  font-size:clamp(16px,4.4vw,20px);line-height:1.25;letter-spacing:-.01em;
+  animation:halo 2.4s ease-in-out infinite;transition:background .2s,transform .1s;
 }
 #pv .cta::after{
   content:"";position:absolute;top:0;left:-65%;width:45%;height:100%;
@@ -644,7 +669,7 @@ body.teste #pv .barra-fixa{bottom:62px}
         <div class="pontos" id="pontos"></div>
       </div>
       <p class="chamada">Veja agora os looks personalizados que vão te deixar uma mulher <strong>linda e feminina sem ser vulgar!</strong></p>
-      <button class="botao" data-avanca><span>Eu quero os meus looks Personalizados!</span></button>
+      <button class="botao" data-avanca data-valor="iniciar"><span>Eu quero os meus looks Personalizados!</span></button>
       <p class="online"><i></i><span><b id="online">152</b> mulheres estão encontrando <br class="mob">seus looks ideais neste momento</span></p>
     </div>
   </section>
@@ -718,7 +743,7 @@ body.teste #pv .barra-fixa{bottom:62px}
       <p>Foi por isso que, agora em 2026, ela criou o <strong>Mulher Virtuosa</strong>, um guia com mais de 150 looks já montados especialmente para mulheres cristãs que querem se sentir bonitas, elegantes e admiradas, sem culpa, sem exagero e sem deixar de ser quem são.</p>
       <p>Hoje já são <strong>mais de 3.000 mulheres</strong> que aprenderam a se vestir do jeito certo, seguindo os valores cristãos e recuperando a essência de uma verdadeira mulher virtuosa.</p>
       <p>Mais do que ensinar moda, Ana Beatriz ensina o que ninguém te contou: <strong>você pode se sentir linda sem se sentir culpada por isso.</strong></p>
-      <button class="botao" data-avanca><span>CONTINUAR</span></button>
+      <button class="botao" data-avanca data-valor="continuar"><span>CONTINUAR</span></button>
     </div>
   </section>
 
@@ -768,7 +793,7 @@ body.teste #pv .barra-fixa{bottom:62px}
       <div class="look"><img src="imagens/looks/extra-3.webp" alt="" loading="lazy"></div>
       <div class="look"><img src="imagens/looks/extra-4.webp" alt="" loading="lazy"></div>
     </div>
-    <button class="botao" id="finalizar"><span>Quero ter acesso a todos <br class="mob">os meus looks agora!</span></button>
+    <button class="botao" id="finalizar" data-valor="ver_oferta"><span>Quero ter acesso a todos <br class="mob">os meus looks agora!</span></button>
   </section>
 
 
@@ -894,7 +919,7 @@ body.teste #pv .barra-fixa{bottom:62px}
     </ul>
 
     <div class="dentro">
-      <div class="cena-guia">IMAGEM — PÁGINAS DO GUIA ABERTAS NO CELULAR (16:10)</div>
+      <img class="cena-guia" src="imagens/mockup.webp" alt="Guia Mulher Virtuosa por dentro" loading="lazy">
       <p class="legenda-guia">Assim é por dentro: cada look pronto, com as peças separadas e o link de onde comprar.</p>
     </div>
 
@@ -904,7 +929,7 @@ body.teste #pv .barra-fixa{bottom:62px}
     <div class="bonus-lista">
       <!-- Cada bônus: arte vertical + título + texto. Troque a div .bonus-arte por <img class="bonus-arte" src="imagens/bonus-1.jpg" alt=""> -->
       <div class="bonus">
-        <img class="bonus-arte" src="imagens/bonus-1.webp" alt="" loading="lazy">
+        <div class="bonus-col"><img class="bonus-arte" src="imagens/bonus-1.webp" alt="" loading="lazy"></div>
         <div class="bonus-txt">
           <span class="bonus-tag">Bônus 01</span>
           <span class="preco"><s>R$47</s> <b>Grátis</b></span>
@@ -912,8 +937,9 @@ body.teste #pv .barra-fixa{bottom:62px}
           <p>Uma lista completa com as melhores <strong>peças cristãs da Shopee e Shein</strong>, com link direto para comprar sem perder tempo procurando.</p>
         </div>
       </div>
+      <div class="separador">♥</div>
       <div class="bonus">
-        <img class="bonus-arte" src="imagens/bonus-2.webp" alt="" loading="lazy">
+        <div class="bonus-col"><img class="bonus-arte" src="imagens/bonus-2.webp" alt="" loading="lazy"></div>
         <div class="bonus-txt">
           <span class="bonus-tag">Bônus 02</span>
           <span class="preco"><s>R$77</s> <b>Grátis</b></span>
@@ -921,8 +947,9 @@ body.teste #pv .barra-fixa{bottom:62px}
           <p>Aprenda a tirar <strong>fotos lindas sem ser vulgar</strong>, com um guia de melhores ângulos, poses e enquadramentos para você aparecer bem em qualquer foto, mostrando a mulher que você realmente é!</p>
         </div>
       </div>
+      <div class="separador">♥</div>
       <div class="bonus">
-        <img class="bonus-arte" src="imagens/bonus-3.webp" alt="" loading="lazy">
+        <div class="bonus-col"><img class="bonus-arte" src="imagens/bonus-3.webp" alt="" loading="lazy"></div>
         <div class="bonus-txt">
           <span class="bonus-tag">Bônus 03</span>
           <span class="preco"><s>R$67</s> <b>Grátis</b></span>
@@ -930,8 +957,9 @@ body.teste #pv .barra-fixa{bottom:62px}
           <p>Um guia com looks de <strong>praia, piscina e férias</strong> para você curtir o sol à vontade, se sentindo bonita e confortável dentro dos seus valores.</p>
         </div>
       </div>
+      <div class="separador">♥</div>
       <div class="bonus">
-        <img class="bonus-arte" src="imagens/bonus-4.webp" alt="" loading="lazy">
+        <div class="bonus-col"><img class="bonus-arte" src="imagens/bonus-4.webp" alt="" loading="lazy"></div>
         <div class="bonus-txt">
           <span class="bonus-tag">Bônus 04</span>
           <span class="preco"><s>R$47</s> <b>Grátis</b></span>
@@ -939,8 +967,9 @@ body.teste #pv .barra-fixa{bottom:62px}
           <p>Looks de academia, caminhada e treino que <strong>não marcam e não deixam você constrangida</strong>, para você cuidar do seu corpo sem abrir mão de nada.</p>
         </div>
       </div>
+      <div class="separador">♥</div>
       <div class="bonus">
-        <img class="bonus-arte" src="imagens/bonus-5.webp" alt="" loading="lazy">
+        <div class="bonus-col"><img class="bonus-arte" src="imagens/bonus-5.webp" alt="" loading="lazy"></div>
         <div class="bonus-txt">
           <span class="bonus-tag">Bônus 05</span>
           <span class="preco"><s>R$57</s> <b>Grátis</b></span>
@@ -1059,6 +1088,16 @@ body.teste #pv .barra-fixa{bottom:62px}
 
 
   </section>
+
+  <!-- ETAPA 12 — CLIQUE NO CHECKOUT (Apenas para trackeamento) -->
+  <section class="etapa" data-etapa="12">
+    <div class="carregando">
+      <div class="anel"><b style="color:var(--verde)">✓</b></div>
+      <h2 class="pergunta">Redirecionando...</h2>
+      <p class="status">Aguarde, você está sendo redirecionada para o checkout seguro.</p>
+    </div>
+  </section>
+
 </main>
 
 <!-- Barra visível só com MODO_TESTE = true -->
@@ -1083,7 +1122,7 @@ body.teste #pv .barra-fixa{bottom:62px}
     atual = n;
     etapas.forEach(s => s.classList.toggle("ativa", +s.dataset.etapa === n));
     document.body.classList.toggle("abertura-ativa", n === 0);
-    document.body.classList.toggle("pv-ativa", n === 11);
+    document.body.classList.toggle("pv-ativa", n >= 11);
     fio.style.width = (n >= 9 ? 100 : (Math.max(n,0)/TOTAL_PERGUNTAS)*100) + "%";
     window.scrollTo({top:0,behavior:"instant"});
     if(n === 9){ rodarCarregamento(); adiantarPV(); }
@@ -1096,7 +1135,7 @@ body.teste #pv .barra-fixa{bottom:62px}
     respostas["e"+chave] = el.dataset.valor;
     el.classList.add("marcada");
     // if(window.fbq) fbq('trackCustom','QuizEtapa'+chave);
-    setTimeout(() => { el.classList.remove("marcada"); mostrar(chave === 8 ? 9 : chave + 1); }, 260);
+    setTimeout(() => { el.classList.remove("marcada"); if(chave < 11) mostrar(chave === 8 ? 9 : chave + 1); }, 260);
   }
 
   etapas.forEach(sec => {
@@ -1259,7 +1298,11 @@ body.teste #pv .barra-fixa{bottom:62px}
       pvq("[data-checkout]").forEach(a => {
         if(a.classList.contains("ancora")) return;   // só o botão de âncora fica de fora
         a.href = URL_CHECKOUT;                       // link do checkout, exatamente como está lá em cima
-        // a.addEventListener("click", () => { if(window.fbq) fbq('track','InitiateCheckout'); });
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          mostrar(12);
+          setTimeout(() => { window.location.href = a.href; }, 800);
+        });
       });
     
       // Demo do app (bloco 03)
